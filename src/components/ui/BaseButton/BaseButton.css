@@ -1,0 +1,18 @@
+﻿.base-button {
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+  background-color: #1323cd;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.header-button{
+  width: 79px;
+}
+.base-button:hover {
+  background-color: rgb(11, 27, 140);
+}
