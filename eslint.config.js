@@ -34,12 +34,8 @@ export default tseslint.config(
       ],
       'react-compiler/react-compiler': 'error',
 
-
-      "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/ban-ts-comment": [
-        "error",
-        { "ts-ignore": true },
-      ],
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': true }],
 
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,

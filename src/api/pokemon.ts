@@ -1,4 +1,4 @@
-﻿import type { PokemonListItem } from '../types/pokemon.ts';
+﻿import type { PokemonListItem } from 'types/pokemon.ts';
 
 class PokemonService {
   async getAll(limit = 30): Promise<PokemonListItem[]> {
@@ -10,3 +10,5 @@ class PokemonService {
 }
 
 export default new PokemonService();
+/*const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        return await response.json();*/

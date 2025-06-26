@@ -6,7 +6,7 @@
   border: 1px solid var(--grey-lighter);
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   border-radius: 8px;
-  min-width: 130px;
+  width: 130px;
 
   overflow: hidden;
   transition: box-shadow 0.3s ease;
@@ -21,15 +21,16 @@
   width: 100%;
   padding: 10px;
   border-radius: 45% 45% 0 0;
- color: var(--white);
+  color: var(--white);
 }
 
 .card__title {
   padding: 8px;
+  text-align: center;
 }
 
 .card__image {
-  padding: 0.5rem  0.5rem 0 0.5rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;

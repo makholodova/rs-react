@@ -1,11 +1,11 @@
 ﻿import { Component } from 'react';
 import './Card.css';
+import type { PokemonListItem } from 'types/pokemon.ts';
+import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import {
   extractPokemonIdFromUrl,
   getPokemonImageUrl,
-} from '../../units/pokemon.ts';
-import type { PokemonListItem } from '../../types/pokemon.ts';
-import { getRandomColorRGB } from '../../units/generate-colors.ts';
+} from '../../units/pokemon-helpers.ts';
 
 export default class Card extends Component<PokemonListItem> {
   color: string;
