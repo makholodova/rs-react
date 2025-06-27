@@ -1,14 +1,42 @@
 ﻿import type { PokemonListItem } from 'types/pokemon.ts';
 
+const BASE_URL = 'https://pokeapi.co/api/v2';
+
 class PokemonService {
   async getAll(limit = 30): Promise<PokemonListItem[]> {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
-    if (!res.ok) throw new Error('Ошибка загрузки списка покемонов');
+    const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
     const data = await res.json();
-    return data.results;
+    const results: { name: string; url: string }[] = data.results;
+
+    const detailedItems = await Promise.all(
+      results.map(async ({ name, url }) => {
+        try {
+          const res = await fetch(url);
+          const data = await res.json();
+
+          return {
+            name: data.name,
+            id: data.id,
+            height: data.height,
+            weight: data.weight,
+          };
+        } catch (err) {
+          console.error(`Ошибка при загрузке покемона ${name}:`, err);
+          return null;
+        }
+      })
+    );
+
+    return detailedItems.filter(
+      (item): item is PokemonListItem => item !== null
+    );
+  }
+
+  async searchByName(name: string): Promise<PokemonListItem> {
+    const res = await fetch(`${BASE_URL}/pokemon/${name.toLowerCase()}`);
+    if (!res.ok) throw new Error('Not found');
+    return await res.json();
   }
 }
 
 export default new PokemonService();
-/*const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-        return await response.json();*/
