@@ -1,4 +1,7 @@
 ﻿export interface PokemonListItem {
   name: string;
-  url: string;
+  id: number;
+  height: number;
+  weight: number;
+  url?: string;
 }
