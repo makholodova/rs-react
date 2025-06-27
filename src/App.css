@@ -1,7 +1,6 @@
-.card-list {
+.container-button {
   display: flex;
-  flex-wrap: wrap;
-  align-content: center;
   justify-content: center;
-  gap: 30px;
+  align-items: center;
+  margin: 2rem auto;
 }
