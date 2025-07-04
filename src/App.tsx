@@ -11,6 +11,12 @@ export default class App extends Component {
     search: '',
   };
 
+  componentDidMount() {
+    const savedSearch = localStorage.getItem('search-makholodova');
+    if (savedSearch) {
+      this.setState({ search: JSON.parse(savedSearch) });
+    }
+  }
   handleSearchChange = (value: string) => {
     this.setState({ search: value });
   };

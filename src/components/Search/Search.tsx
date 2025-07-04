@@ -28,6 +28,10 @@ export default class Search extends Component<Props, State> {
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    localStorage.setItem(
+      'search-makholodova',
+      JSON.stringify(this.state.inputValue.trim())
+    );
     this.props.onSearchChange(this.state.inputValue.trim());
   };
 

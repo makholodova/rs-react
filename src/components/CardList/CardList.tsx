@@ -18,7 +18,7 @@ export default class CardList extends Component<Props> {
       return <PokemonLoader />;
     }
     if (isFetchError) {
-      return <p>Something went wrong</p>;
+      return <p className="error">Something went wrong..</p>;
     }
 
     return (

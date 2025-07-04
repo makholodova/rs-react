@@ -31,6 +31,7 @@ export default class Main extends Component<Props, State> {
       this.fetchData(this.props.search);
     }
   }
+
   fetchData = async (search: string) => {
     this.setState({ loading: true, isFetchError: false });
 
@@ -38,9 +39,7 @@ export default class Main extends Component<Props, State> {
       let items: PokemonListItem[];
 
       if (search.trim()) {
-        console.log('search', search.trim());
         const data = await PokemonService.searchByName(search);
-        console.log('data', data);
         if (data) {
           items = [
             {
@@ -58,8 +57,7 @@ export default class Main extends Component<Props, State> {
       }
 
       this.setState({ items });
-    } catch (err) {
-      console.error('Ошибка при загрузке:', err);
+    } catch {
       this.setState({ isFetchError: true, items: [] });
     } finally {
       this.setState({ loading: false });
@@ -68,8 +66,14 @@ export default class Main extends Component<Props, State> {
 
   render() {
     const { items, loading, isFetchError } = this.state;
+    const { search } = this.props;
     return (
       <main className="main">
+        {!loading && !isFetchError && items.length === 0 && search.trim() && (
+          <div className="not-found-message">
+            {`No results found for "${search}"`}
+          </div>
+        )}
         <CardList items={items} loading={loading} isFetchError={isFetchError} />
         <div className="container-button">
           <BaseButton type="submit">Check Error Boundary</BaseButton>

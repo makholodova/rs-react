@@ -3,3 +3,8 @@
   max-width: 1050px;
   margin: 0 auto;
 }
+.not-found-message{
+  margin-top: 50px;
+  font-size: 2rem;
+  text-align: center;
+}

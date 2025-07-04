@@ -32,10 +32,22 @@ class PokemonService {
     );
   }
 
-  async searchByName(name: string): Promise<PokemonListItem> {
+  async searchByName(name: string): Promise<PokemonListItem | null> {
     const res = await fetch(`${BASE_URL}/pokemon/${name.toLowerCase()}`);
-    if (!res.ok) throw new Error('Not found');
-    return await res.json();
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`API error: ${res.status}`);
+    }
+    const data = await res.json();
+    return {
+      name: data.name,
+      id: data.id,
+      height: data.height,
+      weight: data.weight,
+    };
   }
 }
 
