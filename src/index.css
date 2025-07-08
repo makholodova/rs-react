@@ -21,6 +21,8 @@
   --yellow-light: #fffcc7;
   --green: #169b00;
   --red: #ff0000;
+  --blue: #1323cd;
+  --blue-hover: rgb(11, 27, 140);
 }
 body {
 
