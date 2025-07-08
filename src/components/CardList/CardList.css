@@ -7,6 +7,11 @@
 
 
 }
+.not-found-message{
+  margin-top: 50px;
+  font-size: 2rem;
+  text-align: center;
+}
 .error{
   margin-top: 50px;
   text-align: center;

@@ -1,9 +1,6 @@
-﻿import { type ButtonHTMLAttributes, Component, type ReactNode } from 'react';
+﻿import { Component } from 'react';
+import type { BaseButtonProps } from 'types/ui.ts';
 import './BaseButton.css';
-
-interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: ReactNode;
-}
 
 export default class BaseButton extends Component<BaseButtonProps> {
   render() {

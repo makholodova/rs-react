@@ -1,17 +1,12 @@
-﻿import './Header.css';
-import { Component } from 'react';
-import logo from 'assets/logo-pokemon.png';
+﻿import { Component } from 'react';
+import type { HeaderProps } from 'types/components.ts';
 import Search from 'components/Search/Search.tsx';
+import logo from 'assets/logo-pokemon.png';
+import './Header.css';
 
-interface Props {
-  search: string;
-  onSearchChange: (value: string) => void;
-}
-
-export default class Header extends Component<Props> {
+export default class Header extends Component<HeaderProps> {
   render() {
     const { search, onSearchChange } = this.props;
-
     return (
       <header className="header-wrapper">
         <div className="header">

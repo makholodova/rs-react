@@ -1,5 +1,5 @@
-﻿import './PokemonLoader.css';
-import { Component } from 'react';
+﻿import { Component } from 'react';
+import './PokemonLoader.css';
 
 export default class PokemonLoader extends Component {
   render() {

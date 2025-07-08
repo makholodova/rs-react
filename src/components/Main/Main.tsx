@@ -1,23 +1,12 @@
 ﻿import { Component } from 'react';
-import './Main.css';
-import type { PokemonListItem } from 'types/pokemon.ts';
+import type { CardProps, MainProps, MainState } from 'types/components.ts';
 import PokemonService from 'api/pokemon.ts';
 import CardList from 'components/CardList/CardList.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
+import './Main.css';
 
-interface Props {
-  search: string;
-}
-
-interface State {
-  items: PokemonListItem[];
-  loading: boolean;
-  isFetchError: boolean;
-  hasError: boolean;
-}
-
-export default class Main extends Component<Props, State> {
-  state: State = {
+export default class Main extends Component<MainProps, MainState> {
+  state: MainState = {
     items: [],
     loading: true,
     isFetchError: false,
@@ -28,7 +17,7 @@ export default class Main extends Component<Props, State> {
     this.fetchData(this.props.search);
   }
 
-  async componentDidUpdate(prevProps: Props) {
+  async componentDidUpdate(prevProps: MainProps) {
     if (prevProps.search !== this.props.search) {
       this.fetchData(this.props.search);
     }
@@ -38,7 +27,7 @@ export default class Main extends Component<Props, State> {
     this.setState({ loading: true, isFetchError: false });
 
     try {
-      let items: PokemonListItem[];
+      let items: CardProps[];
 
       if (search.trim()) {
         const data = await PokemonService.searchByName(search);
@@ -65,9 +54,11 @@ export default class Main extends Component<Props, State> {
       this.setState({ loading: false });
     }
   };
+
   handleCrash = () => {
     this.setState({ hasError: true });
   };
+
   render() {
     const { items, loading, isFetchError } = this.state;
     const { search } = this.props;
@@ -76,12 +67,12 @@ export default class Main extends Component<Props, State> {
     }
     return (
       <main className="main">
-        {!loading && !isFetchError && items.length === 0 && search.trim() && (
-          <div className="not-found-message">
-            {`No results found for "${search}"`}
-          </div>
-        )}
-        <CardList items={items} loading={loading} isFetchError={isFetchError} />
+        <CardList
+          search={search}
+          items={items}
+          loading={loading}
+          isFetchError={isFetchError}
+        />
         <div className="container-button">
           <BaseButton onClick={this.handleCrash} type="submit">
             Check Error Boundary

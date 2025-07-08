@@ -1,5 +1,8 @@
 ﻿import { Component, type ErrorInfo } from 'react';
-import type { ErrorBoundaryProps, ErrorBoundaryState } from 'types/pokemon.ts';
+import type {
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
+} from 'types/components.ts';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import './ErrorBoundary.css';
 
@@ -13,7 +16,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 
   handleReload = () => {
-    this.setState({ hasError: false });
+    window.location.reload();
   };
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {

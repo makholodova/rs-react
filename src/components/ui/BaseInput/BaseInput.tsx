@@ -1,10 +1,6 @@
-﻿import './BaseInput.css';
-import { type ChangeEvent, Component, type InputHTMLAttributes } from 'react';
-
-interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+﻿import { type ChangeEvent, Component } from 'react';
+import type { BaseInputProps } from 'types/ui.ts';
+import './BaseInput.css';
 
 export default class BaseInput extends Component<BaseInputProps> {
   handleInput = (e: ChangeEvent<HTMLInputElement>) => {

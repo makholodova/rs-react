@@ -1,48 +1,44 @@
-﻿import './Search.css';
-import { type ChangeEvent, Component, type FormEvent } from 'react';
+﻿import { type ChangeEvent, Component, type FormEvent } from 'react';
+import type { SearchProps, SearchState } from 'types/components.ts';
 import BaseInput from 'components/ui/BaseInput/BaseInput.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
+import './Search.css';
 
-interface Props {
-  search: string;
-  onSearchChange: (value: string) => void;
-}
-interface State {
-  inputValue: string;
-}
-
-export default class Search extends Component<Props, State> {
-  state: State = {
-    inputValue: this.props.search || '',
+export default class Search extends Component<SearchProps, SearchState> {
+  state: SearchState = {
+    search: this.props.search || '',
   };
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: SearchProps) {
     if (prevProps.search !== this.props.search) {
-      this.setState({ inputValue: this.props.search });
+      this.setState({ search: this.props.search });
     }
   }
 
   handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
+    this.setState({ search: e.target.value });
+    const value = e.target.value;
+    this.setState({ search: value });
+    localStorage.setItem('search-makholodova', JSON.stringify(value.trim()));
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    localStorage.setItem(
+    /* localStorage.setItem(
       'search-makholodova',
-      JSON.stringify(this.state.inputValue.trim())
-    );
-    this.props.onSearchChange(this.state.inputValue.trim());
+      JSON.stringify(this.state.search.trim())
+    );*/
+    this.props.onSearchChange(this.state.search.trim());
   };
 
   render() {
-    const { inputValue } = this.state;
+    const { search } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="search-container">
         <BaseInput
           type="search"
           placeholder="Search..."
-          value={inputValue}
+          value={search}
           onChange={this.handleInput}
         />
         <BaseButton className="header-button" type="submit">

@@ -1,9 +1,9 @@
-﻿import type { PokemonListItem } from 'types/pokemon.ts';
+﻿import type { CardProps } from 'types/components.ts';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
 class PokemonService {
-  async getAll(limit = 30): Promise<PokemonListItem[]> {
+  async getAll(limit = 30): Promise<CardProps[]> {
     const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
     const data = await res.json();
     const results: { name: string; url: string }[] = data.results;
@@ -27,12 +27,10 @@ class PokemonService {
       })
     );
 
-    return detailedItems.filter(
-      (item): item is PokemonListItem => item !== null
-    );
+    return detailedItems.filter((item): item is CardProps => item !== null);
   }
 
-  async searchByName(name: string): Promise<PokemonListItem | null> {
+  async searchByName(name: string): Promise<CardProps | null> {
     const res = await fetch(`${BASE_URL}/pokemon/${name.toLowerCase()}`);
 
     if (!res.ok) {

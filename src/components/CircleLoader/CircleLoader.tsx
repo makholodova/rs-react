@@ -1,5 +1,5 @@
-﻿import './CircleLoader.css';
-import { Component } from 'react';
+﻿import { Component } from 'react';
+import './CircleLoader.css';
 
 export default class CircleLoader extends Component {
   render() {

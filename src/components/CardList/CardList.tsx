@@ -1,24 +1,23 @@
 ﻿import { Component } from 'react';
-import './CardList.css';
-import type { PokemonListItem } from 'types/pokemon.ts';
+import type { CardListProps } from 'types/components.ts';
 import Card from 'components/Card/Card.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
+import './CardList.css';
 
-interface Props {
-  items: PokemonListItem[];
-  loading: boolean;
-  isFetchError: boolean;
-}
-
-export default class CardList extends Component<Props> {
+export default class CardList extends Component<CardListProps> {
   render() {
-    const { items, loading, isFetchError } = this.props;
+    const { items, loading, isFetchError, search } = this.props;
 
     if (loading) {
       return <PokemonLoader />;
     }
     if (isFetchError) {
       return <p className="error">Something went wrong..</p>;
+    }
+    if (!loading && items.length === 0) {
+      return (
+        <p className="not-found-message">{`No results found for "${search}"`}</p>
+      );
     }
 
     return (

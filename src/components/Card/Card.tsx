@@ -1,18 +1,14 @@
 ﻿import { Component } from 'react';
-import './Card.css';
-import type { PokemonListItem } from 'types/pokemon.ts';
+import type { CardProps, CardState } from 'types/components.ts';
+import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
-import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
+import './Card.css';
 
-interface State {
-  imageLoaded: boolean;
-}
-
-export default class Card extends Component<PokemonListItem, State> {
+export default class Card extends Component<CardProps, CardState> {
   color: string;
 
-  constructor(props: PokemonListItem) {
+  constructor(props: CardProps) {
     super(props);
     this.state = {
       imageLoaded: false,
