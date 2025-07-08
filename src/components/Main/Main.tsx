@@ -13,6 +13,7 @@ interface State {
   items: PokemonListItem[];
   loading: boolean;
   isFetchError: boolean;
+  hasError: boolean;
 }
 
 export default class Main extends Component<Props, State> {
@@ -20,6 +21,7 @@ export default class Main extends Component<Props, State> {
     items: [],
     loading: true,
     isFetchError: false,
+    hasError: false,
   };
 
   async componentDidMount() {
@@ -63,10 +65,15 @@ export default class Main extends Component<Props, State> {
       this.setState({ loading: false });
     }
   };
-
+  handleCrash = () => {
+    this.setState({ hasError: true });
+  };
   render() {
     const { items, loading, isFetchError } = this.state;
     const { search } = this.props;
+    if (this.state.hasError) {
+      throw new Error('Something went wrong.');
+    }
     return (
       <main className="main">
         {!loading && !isFetchError && items.length === 0 && search.trim() && (
@@ -76,7 +83,9 @@ export default class Main extends Component<Props, State> {
         )}
         <CardList items={items} loading={loading} isFetchError={isFetchError} />
         <div className="container-button">
-          <BaseButton type="submit">Check Error Boundary</BaseButton>
+          <BaseButton onClick={this.handleCrash} type="submit">
+            Check Error Boundary
+          </BaseButton>
         </div>
       </main>
     );
