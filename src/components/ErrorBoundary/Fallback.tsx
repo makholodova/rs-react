@@ -1,10 +1,10 @@
-﻿import { Component } from 'react';
+﻿import { Component, type ReactNode } from 'react';
 import type { FallbackProps } from 'types/components.ts';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import './Fallback.css';
 
 export default class Fallback extends Component<FallbackProps> {
-  render() {
+  render(): ReactNode {
     const { onReload } = this.props;
     return (
       <div className="fallback">

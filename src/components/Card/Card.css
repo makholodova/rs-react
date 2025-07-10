@@ -10,7 +10,6 @@
 
   overflow: hidden;
   transition: box-shadow 0.3s ease;
-
 }
 
 .card:hover {
@@ -25,7 +24,6 @@
   height: 100%;
   padding: 10px;
   border-radius: 45% 45% 0 0;
-
 }
 
 .card__title {
@@ -48,14 +46,13 @@
   width: 96px;
   scale: 1;
   transition: scale 0.3s ease;
-
 }
 
 .card:hover .card__sprite {
   scale: 1.2;
 }
 
-.card__description{
+.card__description {
   text-align: center;
   color: var(--grey-lighter);
 }

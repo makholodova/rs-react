@@ -4,13 +4,13 @@
   font-size: 1rem;
   font-weight: 400;
   color: var(--white);
-  background-color: var(--blue) ;
+  background-color: var(--blue);
   border: none;
   outline: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-.header-button{
+.header-button {
   width: 79px;
 }
 .base-button:hover {

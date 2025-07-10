@@ -1,4 +1,4 @@
-﻿import { Component } from 'react';
+﻿import { Component, type ReactNode } from 'react';
 import type { CardProps, CardState } from 'types/components.ts';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
@@ -16,11 +16,11 @@ export default class Card extends Component<CardProps, CardState> {
     this.color = getRandomColorRGB();
   }
 
-  handleImageLoad = () => {
+  handleImageLoad = (): void => {
     this.setState({ imageLoaded: true });
   };
 
-  render() {
+  render(): ReactNode {
     const { name, id, weight, height } = this.props;
     const { imageLoaded } = this.state;
     const imageUrl = getPokemonImageUrl(id);

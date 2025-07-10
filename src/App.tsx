@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, type ReactNode } from 'react';
 import './App.css';
 import Header from 'components/Header/Header.tsx';
 import Main from 'components/Main/Main.tsx';
@@ -10,17 +10,17 @@ export default class App extends Component {
     isSearchReady: false,
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const savedSearch = localStorage.getItem('search-makholodova');
     const parsedSearch = savedSearch ? JSON.parse(savedSearch) : '';
     this.setState({ search: parsedSearch, isSearchReady: true });
   }
-  handleSearchChange = (value: string) => {
+  handleSearchChange = (value: string): void => {
     localStorage.setItem('search-makholodova', JSON.stringify(value));
     this.setState({ search: value });
   };
 
-  render() {
+  render(): ReactNode {
     const { search, isSearchReady } = this.state;
     return (
       <div className="App">

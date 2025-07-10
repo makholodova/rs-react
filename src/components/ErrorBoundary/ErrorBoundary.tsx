@@ -1,4 +1,4 @@
-﻿import { Component, type ErrorInfo } from 'react';
+﻿import { Component, type ErrorInfo, type ReactNode } from 'react';
 import type {
   ErrorBoundaryProps,
   ErrorBoundaryState,
@@ -14,7 +14,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     return { hasError: true };
   }
 
-  handleReload = () => {
+  handleReload = (): void => {
     window.location.reload();
   };
 
@@ -22,7 +22,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     console.error('Error:', error, errorInfo);
   }
 
-  render() {
+  render(): ReactNode {
     if (this.state.hasError) {
       return <Fallback onReload={this.handleReload} />;
     }

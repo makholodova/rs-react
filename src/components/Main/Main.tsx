@@ -1,4 +1,4 @@
-﻿import { Component } from 'react';
+﻿import { Component, type ReactNode } from 'react';
 import type { CardProps, MainProps, MainState } from 'types/components.ts';
 import PokemonService from 'api/pokemon.ts';
 import CardList from 'components/CardList/CardList.tsx';
@@ -13,17 +13,17 @@ export default class Main extends Component<MainProps, MainState> {
     hasError: false,
   };
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     this.fetchData(this.props.search);
   }
 
-  async componentDidUpdate(prevProps: MainProps) {
+  async componentDidUpdate(prevProps: MainProps): Promise<void> {
     if (prevProps.search !== this.props.search) {
       this.fetchData(this.props.search);
     }
   }
 
-  fetchData = async (search: string) => {
+  fetchData = async (search: string): Promise<void> => {
     this.setState({ loading: true, isFetchError: false });
 
     try {
@@ -43,11 +43,11 @@ export default class Main extends Component<MainProps, MainState> {
     }
   };
 
-  handleCrash = () => {
+  handleCrash = (): void => {
     this.setState({ hasError: true });
   };
 
-  render() {
+  render(): ReactNode {
     const { items, loading, isFetchError } = this.state;
     const { search } = this.props;
     if (this.state.hasError) {

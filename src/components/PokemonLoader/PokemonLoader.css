@@ -12,7 +12,7 @@
   border-radius: 50%;
   position: relative;
   background: linear-gradient(to bottom, red 50%, white 50%);
-  animation: spinAndPulse  2s infinite linear;
+  animation: spinAndPulse 2s infinite linear;
 }
 
 .pokeball::before {
