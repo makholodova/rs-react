@@ -3,6 +3,7 @@
 export interface AppState extends SearchState {
   isSearchReady: boolean;
 }
+
 export interface HeaderProps {
   search: string;
   onSearchChange: (value: string) => void;
@@ -23,9 +24,15 @@ export interface SearchProps {
   search: string;
   onSearchChange: (value: string) => void;
 }
+
 export interface SearchState {
   search: string;
 }
+
+export type NamedAPIResource = {
+  name: string;
+  url: string;
+};
 
 export interface CardProps {
   name: string;
@@ -34,6 +41,7 @@ export interface CardProps {
   weight: number;
   url?: string;
 }
+
 export interface CardListProps {
   items: CardProps[];
   loading: boolean;

@@ -30,19 +30,7 @@ export default class Main extends Component<MainProps, MainState> {
       let items: CardProps[];
 
       if (search.trim()) {
-        const data = await PokemonService.searchByName(search);
-        if (data) {
-          items = [
-            {
-              name: data.name,
-              id: data.id,
-              height: data.height,
-              weight: data.weight,
-            },
-          ];
-        } else {
-          items = [];
-        }
+        items = await PokemonService.searchByPartialName(search);
       } else {
         items = await PokemonService.getAll();
       }
