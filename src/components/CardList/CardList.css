@@ -1,0 +1,17 @@
+﻿.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 30px;
+}
+.not-found-message {
+  margin-top: 50px;
+  font-size: 2rem;
+  text-align: center;
+}
+.error {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 2rem;
+}

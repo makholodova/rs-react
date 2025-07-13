@@ -1,0 +1,41 @@
+﻿.pokemon-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.pokeball {
+  width: 60px;
+  height: 60px;
+  border: 4px solid black;
+  border-radius: 50%;
+  position: relative;
+  background: linear-gradient(to bottom, red 50%, white 50%);
+  animation: spinAndPulse 2s infinite linear;
+}
+
+.pokeball::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 21px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@keyframes spinAndPulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}

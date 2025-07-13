@@ -1,0 +1,11 @@
+.fallback {
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.fallback__message {
+  color: var(--red);
+  font-size: 1.25rem;
+  margin: 2rem 0;
+}

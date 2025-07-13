@@ -1,0 +1,21 @@
+﻿.header-wrapper {
+  background-color: var(--red);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+
+  padding: 1rem 1rem;
+  max-width: 1050px;
+  margin: 0 auto 1.5rem auto;
+}
+
+@media (max-width: 500px) {
+  .header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

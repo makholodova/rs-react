@@ -1,0 +1,22 @@
+﻿.base-input {
+  width: 100%;
+  padding: 11px 16px;
+
+  border: 2px solid var(--grey-not-active);
+  border-radius: 8px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--grey-not-active);
+
+  outline: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.base-input:focus {
+  border: 2px solid var(--black);
+  color: var(--black);
+}
