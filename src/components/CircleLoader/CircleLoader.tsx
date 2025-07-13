@@ -3,6 +3,6 @@ import './CircleLoader.css';
 
 export default class CircleLoader extends Component {
   render(): ReactNode {
-    return <div className="circle-loader"></div>;
+    return <div className="circle-loader" data-testid="circle-loader"></div>;
   }
 }
