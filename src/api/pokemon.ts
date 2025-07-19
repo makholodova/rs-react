@@ -3,7 +3,7 @@
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
 class PokemonService {
-  private allNames: NamedAPIResource[] = [];
+  public allNames: NamedAPIResource[] = [];
 
   async searchByPartialName(query: string): Promise<CardProps[]> {
     const names = await this.loadAllNames();
@@ -30,7 +30,7 @@ class PokemonService {
     return detailedItems.filter((item) => item !== null);
   }
 
-  private async getPokemonDetails(
+  public async getPokemonDetails(
     item: NamedAPIResource
   ): Promise<CardProps | null> {
     try {
@@ -48,7 +48,7 @@ class PokemonService {
     }
   }
 
-  private async loadAllNames(): Promise<NamedAPIResource[]> {
+  public async loadAllNames(): Promise<NamedAPIResource[]> {
     if (this.allNames.length > 0) return this.allNames;
 
     const res = await fetch(`${BASE_URL}/pokemon?limit=1302`);
