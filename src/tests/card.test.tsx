@@ -1,18 +1,25 @@
-﻿import { fireEvent, render, screen } from '@testing-library/react';
+﻿import type { JSX } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Card from '../components/Card/Card';
 
 vi.mock('components/CircleLoader/CircleLoader', () => ({
-  default: () => <div data-testid="circle-loader" />,
+  default: (): JSX.Element => <div data-testid="circle-loader" />,
 }));
 
-vi.mock('units/generate-colors', () => ({
-  getRandomColorRGB: () => 'rgb(255, 0, 0)',
-}));
+vi.mock(
+  'units/generate-colors',
+  (): Record<string, () => string> => ({
+    getRandomColorRGB: () => 'rgb(255, 0, 0)',
+  })
+);
 
-vi.mock('units/pokemon-helpers', () => ({
-  getPokemonImageUrl: (id: number) => `https://img.pokemon.fake/${id}.png`,
-}));
+vi.mock(
+  'units/pokemon-helpers',
+  (): Record<string, (id: number) => string> => ({
+    getPokemonImageUrl: (id: number) => `https://img.pokemon.fake/${id}.png`,
+  })
+);
 
 describe('Card component', () => {
   it('Circle  is renders name ang description', () => {

@@ -1,13 +1,16 @@
-﻿import { render, screen } from '@testing-library/react';
+﻿import type { JSX } from 'react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import CardList from '../components/CardList/CardList';
 
 vi.mock('components/PokemonLoader/PokemonLoader', () => ({
-  default: () => <div data-testid="pokemon-loader" />,
+  default: (): JSX.Element => <div data-testid="pokemon-loader" />,
 }));
 
 vi.mock('components/Card/Card.tsx', () => ({
-  default: ({ name }: { name: string }) => <div data-testid="card">{name}</div>,
+  default: ({ name }: { name: string }): JSX.Element => (
+    <div data-testid="card">{name}</div>
+  ),
 }));
 
 describe('CardList  component', () => {
