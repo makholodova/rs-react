@@ -20,8 +20,6 @@ const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
   const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
     setSearch(value);
-    setSearch(value);
-    localStorage.setItem('search-makholodova', JSON.stringify(value.trim()));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
