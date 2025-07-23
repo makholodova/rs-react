@@ -1,72 +1,61 @@
-﻿import { Component, type ReactNode } from 'react';
-import type { CardProps, MainProps, MainState } from 'types/components.ts';
+﻿import { type FC, useEffect, useState } from 'react';
+import type { CardProps, MainProps } from 'types/components.ts';
 import PokemonService from 'api/pokemon.ts';
 import CardList from 'components/CardList/CardList.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import './Main.css';
 
-export default class Main extends Component<MainProps, MainState> {
-  state: MainState = {
-    items: [],
-    loading: true,
-    isFetchError: false,
-    hasError: false,
-  };
+const Main: FC<MainProps> = ({ search }) => {
+  const [items, setItems] = useState<CardProps[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isFetchError, setIsFetchError] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  async componentDidMount(): Promise<void> {
-    this.fetchData(this.props.search);
-  }
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      setLoading(true);
+      setIsFetchError(false);
 
-  async componentDidUpdate(prevProps: MainProps): Promise<void> {
-    if (prevProps.search !== this.props.search) {
-      this.fetchData(this.props.search);
-    }
-  }
+      try {
+        let result: CardProps[];
 
-  fetchData = async (search: string): Promise<void> => {
-    this.setState({ loading: true, isFetchError: false });
-
-    try {
-      let items: CardProps[];
-
-      if (search.trim()) {
-        items = await PokemonService.searchByPartialName(search);
-      } else {
-        items = await PokemonService.getAll();
+        if (search.trim()) {
+          result = await PokemonService.searchByPartialName(search);
+        } else {
+          result = await PokemonService.getAll();
+        }
+        setItems(result);
+      } catch {
+        setIsFetchError(true);
+        setItems([]);
+      } finally {
+        setLoading(false);
       }
+    };
+    fetchData();
+  }, [search]);
 
-      this.setState({ items });
-    } catch {
-      this.setState({ isFetchError: true, items: [] });
-    } finally {
-      this.setState({ loading: false });
-    }
+  const handleCrash = (): void => {
+    setHasError(true);
   };
 
-  handleCrash = (): void => {
-    this.setState({ hasError: true });
-  };
-
-  render(): ReactNode {
-    const { items, loading, isFetchError } = this.state;
-    const { search } = this.props;
-    if (this.state.hasError) {
-      throw new Error('Something went wrong.');
-    }
-    return (
-      <main className="main">
-        <CardList
-          search={search}
-          items={items}
-          loading={loading}
-          isFetchError={isFetchError}
-        />
-        <div className="container-button">
-          <BaseButton onClick={this.handleCrash} type="submit">
-            Check Error Boundary
-          </BaseButton>
-        </div>
-      </main>
-    );
+  if (hasError) {
+    throw new Error('Something went wrong.');
   }
-}
+  return (
+    <main className="main">
+      <CardList
+        search={search}
+        items={items}
+        loading={loading}
+        isFetchError={isFetchError}
+      />
+      <div className="container-button">
+        <BaseButton onClick={handleCrash} type="submit">
+          Check Error Boundary
+        </BaseButton>
+      </div>
+    </main>
+  );
+};
+export default Main;

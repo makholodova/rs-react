@@ -13,13 +13,6 @@ export interface MainProps {
   search: string;
 }
 
-export interface MainState {
-  items: CardProps[];
-  loading: boolean;
-  isFetchError: boolean;
-  hasError: boolean;
-}
-
 export interface SearchProps {
   search: string;
   onSearchChange: (value: string) => void;
@@ -47,10 +40,6 @@ export interface CardListProps {
   loading: boolean;
   isFetchError: boolean;
   search?: string;
-}
-
-export interface CardState {
-  imageLoaded: boolean;
 }
 
 export interface ErrorBoundaryProps {

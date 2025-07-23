@@ -1,12 +1,11 @@
-﻿import { Component, type ReactNode } from 'react';
+﻿import type { FC } from 'react';
 import './PokemonLoader.css';
 
-export default class PokemonLoader extends Component {
-  render(): ReactNode {
-    return (
-      <div className="pokemon-loader" data-testid="pokemon-loader">
-        <div className="pokeball"></div>
-      </div>
-    );
-  }
-}
+const PokemonLoader: FC = () => {
+  return (
+    <div className="pokemon-loader" data-testid="pokemon-loader">
+      <div className="pokeball"></div>
+    </div>
+  );
+};
+export default PokemonLoader;

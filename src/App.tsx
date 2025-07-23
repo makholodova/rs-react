@@ -1,32 +1,33 @@
-import { Component, type ReactNode } from 'react';
+import { useEffect, useState } from 'react';
+import type { FC } from 'react';
 import './App.css';
 import Header from 'components/Header/Header.tsx';
 import Main from 'components/Main/Main.tsx';
 import type { AppState } from 'types/components.ts';
 
-export default class App extends Component {
-  state: AppState = {
-    search: '',
-    isSearchReady: false,
-  };
+const App: FC = () => {
+  const [search, setSearch] = useState<AppState['search']>('');
+  const [isSearchReady, setIsSearchReady] =
+    useState<AppState['isSearchReady']>(false);
 
-  componentDidMount(): void {
+  useEffect(() => {
     const savedSearch = localStorage.getItem('search-makholodova');
     const parsedSearch = savedSearch ? JSON.parse(savedSearch) : '';
-    this.setState({ search: parsedSearch, isSearchReady: true });
-  }
-  handleSearchChange = (value: string): void => {
+    setSearch(parsedSearch);
+    setIsSearchReady(true);
+  }, []);
+
+  const handleSearchChange = (value: string): void => {
     localStorage.setItem('search-makholodova', JSON.stringify(value));
-    this.setState({ search: value });
+    setSearch(value);
   };
 
-  render(): ReactNode {
-    const { search, isSearchReady } = this.state;
-    return (
-      <div className="App">
-        <Header search={search} onSearchChange={this.handleSearchChange} />
-        {isSearchReady && <Main search={search} />}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="App">
+      <Header search={search} onSearchChange={handleSearchChange} />
+      {isSearchReady && <Main search={search} />}
+    </div>
+  );
+};
+
+export default App;

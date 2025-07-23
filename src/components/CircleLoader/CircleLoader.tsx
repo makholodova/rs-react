@@ -1,8 +1,8 @@
-﻿import { Component, type ReactNode } from 'react';
+﻿import type { FC } from 'react';
 import './CircleLoader.css';
 
-export default class CircleLoader extends Component {
-  render(): ReactNode {
-    return <div className="circle-loader" data-testid="circle-loader"></div>;
-  }
-}
+const CircleLoader: FC = () => {
+  return <div className="circle-loader" data-testid="circle-loader"></div>;
+};
+
+export default CircleLoader;
