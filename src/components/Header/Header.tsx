@@ -7,11 +7,16 @@ const Header: FC = () => {
   return (
     <header className="header-wrapper">
       <div className="header">
-        <div className="header__image-wrapper">
+        <Link to="/" className="header__image-wrapper">
           <img src={logo} alt="Logo" className="header__image" />
-        </div>
-        <nav>
-          <Link to="/">Main</Link> |<Link to="/about">About</Link>
+        </Link>
+        <nav className="header__nav">
+          <Link className="header__nav-link" to="/">
+            Main
+          </Link>
+          <Link className="header__nav-link" to="/about">
+            About
+          </Link>
         </nav>
       </div>
     </header>
