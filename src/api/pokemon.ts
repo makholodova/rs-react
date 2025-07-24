@@ -18,8 +18,10 @@ class PokemonService {
     return detailed.filter((item) => item !== null);
   }
 
-  async getAll(limit = 30): Promise<CardProps[]> {
-    const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
+  async getAll(offset = 0, limit = 20): Promise<CardProps[]> {
+    const res = await fetch(
+      `${BASE_URL}/pokemon?offset=${offset}&limit=${limit}`
+    );
     const data = await res.json();
     const results: { name: string; url: string }[] = data.results;
 

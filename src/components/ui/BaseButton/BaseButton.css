@@ -16,3 +16,9 @@
 .base-button:hover {
   background-color: var(--blue-hover);
 }
+
+.base-button:disabled {
+  pointer-events: none;
+  opacity: 0.8;
+  filter: grayscale(1);
+}
