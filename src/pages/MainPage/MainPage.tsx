@@ -7,7 +7,7 @@ import './MainPage.css';
 import Search from 'components/Search/Search.tsx';
 import useLocalStorage from '../../hooks/use-local-storage.ts';
 import Pagination from 'components/Pagination/Pagination.tsx';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,7 +21,10 @@ const Main: FC = () => {
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const offset = (currentPage - 1) * limit;
 
-  const handlePageChange = (newPage: number) => {
+  const location = useLocation();
+  const showDetails = /^\/pokemon\/\d+$/.test(location.pathname);
+
+  const handlePageChange = (newPage: number): void => {
     setSearchParams({ page: newPage.toString() });
   };
 
@@ -58,24 +61,32 @@ const Main: FC = () => {
   }
   return (
     <main className="main">
-      <Search search={search} onSearchChange={setSearch} />
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        isNextDisabled={items.length < limit}
-      />
-      <CardList
-        search={search}
-        items={items}
-        loading={loading}
-        isFetchError={isFetchError}
-      />
+      <div className="main__left">
+        <Search search={search} onSearchChange={setSearch} />
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          isNextDisabled={items.length < limit}
+        />
+        <CardList
+          search={search}
+          items={items}
+          loading={loading}
+          isFetchError={isFetchError}
+        />
 
-      <div className="container-button">
-        <BaseButton onClick={handleCrash} type="submit">
-          Check Error Boundary
-        </BaseButton>
+        <div className="container-button">
+          <BaseButton onClick={handleCrash} type="submit">
+            Check Error Boundary
+          </BaseButton>
+        </div>
       </div>
+
+      {showDetails && (
+        <div className="main__right">
+          <Outlet />
+        </div>
+      )}
     </main>
   );
 };

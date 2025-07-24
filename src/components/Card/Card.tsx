@@ -4,6 +4,7 @@ import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
 import './Card.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Card: FC<CardProps> = ({ name, id, weight, height }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -11,12 +12,19 @@ const Card: FC<CardProps> = ({ name, id, weight, height }) => {
   const imageUrl = getPokemonImageUrl(id);
   const color = useMemo(() => getRandomColorRGB(), []);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = (): void => {
+    navigate(`/pokemon/${id}${location.search}`);
+  };
+
   const handleImageLoad = (): void => {
     setImageLoaded(true);
   };
 
   return (
-    <div className="card">
+    <div onClick={handleClick} className="card">
       <div className="card__image">
         {!imageLoaded && <CircleLoader />}
         <img
