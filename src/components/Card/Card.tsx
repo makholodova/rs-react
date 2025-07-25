@@ -5,6 +5,7 @@ import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
 import './Card.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { capitalize } from '../../units/capitalize .ts';
 
 const Card: FC<CardProps> = ({ name, id, weight, height }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -36,9 +37,7 @@ const Card: FC<CardProps> = ({ name, id, weight, height }) => {
         />
       </div>
       <div className="card__title-wrapper" style={{ backgroundColor: color }}>
-        <h3 className="card__title">
-          {name.charAt(0).toUpperCase() + name.slice(1)}
-        </h3>
+        <h3 className="card__title">{capitalize(name)}</h3>
         <div className="card__description">
           <p>weight: {weight};</p>
           <p>height: {height}; </p>

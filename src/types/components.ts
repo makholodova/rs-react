@@ -1,25 +1,8 @@
 ﻿import type { ReactNode } from 'react';
 
-export interface AppState extends SearchState {
-  isSearchReady: boolean;
-}
-
-export interface HeaderProps {
-  search: string;
-  onSearchChange: (value: string) => void;
-}
-
-export interface MainProps {
-  search: string;
-}
-
 export interface SearchProps {
   search: string;
   onSearchChange: (value: string) => void;
-}
-
-export interface SearchState {
-  search: string;
 }
 
 export type NamedAPIResource = {
@@ -33,6 +16,17 @@ export interface CardProps {
   height: number;
   weight: number;
   url?: string;
+}
+
+export interface PokemonDetailProps {
+  name: string;
+  id: number;
+  height: number;
+  weight: number;
+  types: string[];
+  image: string;
+  abilities: string[];
+  stats: { name: string; base: number }[];
 }
 
 export interface CardListProps {

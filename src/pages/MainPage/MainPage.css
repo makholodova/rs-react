@@ -11,7 +11,11 @@
 }
 
 .main__right {
-  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
   border-left: 1px solid #ddd;
   padding: 1rem;
 }
