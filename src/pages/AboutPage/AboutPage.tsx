@@ -15,7 +15,7 @@ const info = {
 };
 
 const About: FC = () => (
-  <div className="about">
+  <div data-testid="about-page" className="about">
     <div className="about__content">
       <div className="about__photo-wrapper">
         <img src={info.photo} alt={info.name} className="about__photo" />

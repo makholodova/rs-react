@@ -7,7 +7,7 @@ const NotFoundPage: FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container-not-found">
+    <div data-testid="not-found-page" className="container-not-found">
       <h2 className="not-found-title">404 — Page Not Found</h2>
       <p className="not-found-text">
         Oops! The page you&rsquo;re looking for doesn&rsquo;t exist or has been

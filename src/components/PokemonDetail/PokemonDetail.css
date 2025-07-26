@@ -1,8 +1,9 @@
 ﻿.close-button {
   background: transparent;
   color: var(--blue);
-  transition: color 0.2ms ease,
-  background 0.2ms ease;
+  transition:
+    color 0.2ms ease,
+    background 0.2ms ease;
 }
 
 .close-button:hover {
@@ -27,7 +28,6 @@
   width: 300px;
   overflow: hidden;
   padding: 1rem;
-
 }
 
 .pokemon-detail__image {
@@ -49,11 +49,11 @@
 }
 
 .pokemon-detail__info {
-display: flex;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-gap: 0.5rem;
+  gap: 0.5rem;
 }
 .pokemon-detail__block {
   display: flex;
@@ -82,13 +82,24 @@ gap: 0.5rem;
   text-transform: capitalize;
 }
 
-
-.type-fire { background: #f08030; }
-.type-water { background: #6890f0; }
-.type-grass { background: #78c850; }
-.type-electric { background: #f8d030; }
-.type-psychic { background: #f85888; }
-.type-flying { background: #99afe1; }
+.type-fire {
+  background: #f08030;
+}
+.type-water {
+  background: #6890f0;
+}
+.type-grass {
+  background: #78c850;
+}
+.type-electric {
+  background: #f8d030;
+}
+.type-psychic {
+  background: #f85888;
+}
+.type-flying {
+  background: #99afe1;
+}
 
 .pokemon-detail__stats {
   list-style: none;

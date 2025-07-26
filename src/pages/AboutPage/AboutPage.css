@@ -48,7 +48,6 @@
   font-size: 16px;
 }
 
-
 .about__link--github {
   display: inline-flex;
   align-items: center;
@@ -86,6 +85,6 @@
 }
 
 .about__icon--rs-school {
-  height:20px;
+  height: 20px;
   transition: fill 0.2s ease;
 }
