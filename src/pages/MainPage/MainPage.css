@@ -19,3 +19,8 @@
   border-left: 1px solid #ddd;
   padding: 1rem;
 }
+
+.main__left--disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}

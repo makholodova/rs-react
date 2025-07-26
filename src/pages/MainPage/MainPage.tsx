@@ -7,7 +7,12 @@ import './MainPage.css';
 import Search from 'components/Search/Search.tsx';
 import useLocalStorage from '../../hooks/use-local-storage.ts';
 import Pagination from 'components/Pagination/Pagination.tsx';
-import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useOutlet,
+  useSearchParams,
+} from 'react-router-dom';
 
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,6 +27,8 @@ const Main: FC = () => {
   const offset = (currentPage - 1) * limit;
 
   const location = useLocation();
+  const outlet = useOutlet();
+
   const showDetails = /^\/pokemon\/\d+$/.test(location.pathname);
 
   const handlePageChange = (newPage: number): void => {
@@ -61,7 +68,7 @@ const Main: FC = () => {
   }
   return (
     <main className="main">
-      <div className="main__left">
+      <div className={`main__left ${outlet ? 'main__left--disabled' : ''}`}>
         <Search search={search} onSearchChange={setSearch} />
         <Pagination
           currentPage={currentPage}
