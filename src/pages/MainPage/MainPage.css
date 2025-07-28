@@ -1,0 +1,26 @@
+﻿.main {
+  padding: 0 1rem;
+  max-width: 1050px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.main__left {
+  width: 100%;
+  padding-right: 1rem;
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+  border-left: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.main__left--disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}

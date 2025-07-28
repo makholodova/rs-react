@@ -109,4 +109,51 @@ describe('Pokemon api', () => {
     expect(result).toEqual([bulbasaur]);
     expect(mockFetch).toHaveBeenCalledTimes(0);
   });
+
+  it('getById: returns detailed Pokémon data', async () => {
+    mockFetch.mockResolvedValueOnce({
+      json: async () => ({
+        name: 'pikachu',
+        id: 25,
+        height: 4,
+        weight: 60,
+        sprites: {
+          other: {
+            'official-artwork': {
+              front_default: 'https://img.pokemon.fake/25.png',
+            },
+          },
+        },
+        types: [{ type: { name: 'electric' } }],
+        abilities: [
+          { ability: { name: 'static' } },
+          { ability: { name: 'lightning-rod' } },
+        ],
+        stats: [
+          { stat: { name: 'hp' }, base_stat: 35 },
+          { stat: { name: 'attack' }, base_stat: 55 },
+        ],
+      }),
+    });
+
+    const result = await pokemon.getById(25);
+
+    expect(result).toEqual({
+      name: 'pikachu',
+      id: 25,
+      image: 'https://img.pokemon.fake/25.png',
+      height: 4,
+      weight: 60,
+      types: ['electric'],
+      abilities: ['static', 'lightning-rod'],
+      stats: [
+        { name: 'hp', base: 35 },
+        { name: 'attack', base: 55 },
+      ],
+    });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://pokeapi.co/api/v2/pokemon/25'
+    );
+  });
 });

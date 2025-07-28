@@ -20,9 +20,6 @@ describe('Search component', () => {
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
 
     expect(input).toHaveValue('bulbasaur');
-    expect(localStorage.getItem('search-makholodova')).toBe(
-      JSON.stringify('bulbasaur')
-    );
   });
 
   it('calls onSearchChange with trimmed value on submit', () => {

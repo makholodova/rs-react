@@ -1,21 +1,26 @@
-﻿import { Component, type ReactNode } from 'react';
-import type { HeaderProps } from 'types/components.ts';
-import Search from 'components/Search/Search.tsx';
+﻿import { type FC } from 'react';
 import logo from 'assets/logo-pokemon.png';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
-export default class Header extends Component<HeaderProps> {
-  render(): ReactNode {
-    const { search, onSearchChange } = this.props;
-    return (
-      <header className="header-wrapper">
-        <div className="header">
-          <div className="header__image-wrapper">
-            <img src={logo} alt="Logo" className="header__image" />
-          </div>
-          <Search search={search} onSearchChange={onSearchChange} />
-        </div>
-      </header>
-    );
-  }
-}
+const Header: FC = () => {
+  return (
+    <header className="header-wrapper">
+      <div className="header">
+        <Link to="/" className="header__image-wrapper">
+          <img src={logo} alt="Logo" className="header__image" />
+        </Link>
+        <nav className="header__nav">
+          <Link className="header__nav-link" to="/">
+            Main
+          </Link>
+          <Link className="header__nav-link" to="/about">
+            About
+          </Link>
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

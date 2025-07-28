@@ -1,55 +1,50 @@
-﻿import { Component, type ReactNode } from 'react';
-import type { CardProps, CardState } from 'types/components.ts';
+﻿import { type FC, useMemo, useState } from 'react';
+import type { CardProps } from 'types/components.ts';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
 import './Card.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { capitalize } from '../../units/capitalize .ts';
 
-export default class Card extends Component<CardProps, CardState> {
-  color: string;
+const Card: FC<CardProps> = ({ name, id, weight, height }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  constructor(props: CardProps) {
-    super(props);
-    this.state = {
-      imageLoaded: false,
-    };
-    this.color = getRandomColorRGB();
-  }
+  const imageUrl = getPokemonImageUrl(id);
+  const color = useMemo(() => getRandomColorRGB(), []);
 
-  handleImageLoad = (): void => {
-    this.setState({ imageLoaded: true });
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = (): void => {
+    navigate(`/pokemon/${id}${location.search}`);
   };
 
-  render(): ReactNode {
-    const { name, id, weight, height } = this.props;
-    const { imageLoaded } = this.state;
-    const imageUrl = getPokemonImageUrl(id);
+  const handleImageLoad = (): void => {
+    setImageLoaded(true);
+  };
 
-    return (
-      <div className="card">
-        <div className="card__image">
-          {!imageLoaded && <CircleLoader />}
-          <img
-            className="card__sprite"
-            src={imageUrl}
-            alt={name}
-            style={{ display: imageLoaded ? 'block' : 'none' }}
-            onLoad={this.handleImageLoad}
-          />
-        </div>
-        <div
-          className="card__title-wrapper"
-          style={{ backgroundColor: this.color }}
-        >
-          <h3 className="card__title">
-            {name.charAt(0).toUpperCase() + name.slice(1)}
-          </h3>
-          <div className="card__description">
-            <p>weight: {weight};</p>
-            <p>height: {height}; </p>
-          </div>
+  return (
+    <div onClick={handleClick} className="card">
+      <div className="card__image">
+        {!imageLoaded && <CircleLoader />}
+        <img
+          className="card__sprite"
+          src={imageUrl}
+          alt={name}
+          style={{ display: imageLoaded ? 'block' : 'none' }}
+          onLoad={handleImageLoad}
+        />
+      </div>
+      <div className="card__title-wrapper" style={{ backgroundColor: color }}>
+        <h3 className="card__title">{capitalize(name)}</h3>
+        <div className="card__description">
+          <p>weight: {weight};</p>
+          <p>height: {height}; </p>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Card;

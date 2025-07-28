@@ -1,51 +1,44 @@
 ﻿import {
   type ChangeEvent,
-  Component,
+  type FC,
   type FormEvent,
-  type ReactNode,
+  useEffect,
+  useState,
 } from 'react';
-import type { SearchProps, SearchState } from 'types/components.ts';
+import type { SearchProps } from 'types/components.ts';
 import BaseInput from 'components/ui/BaseInput/BaseInput.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import './Search.css';
 
-export default class Search extends Component<SearchProps, SearchState> {
-  state: SearchState = {
-    search: this.props.search || '',
-  };
+const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
+  const [search, setSearch] = useState(propSearch);
 
-  componentDidUpdate(prevProps: SearchProps): void {
-    if (prevProps.search !== this.props.search) {
-      this.setState({ search: this.props.search });
-    }
-  }
+  useEffect(() => {
+    setSearch(propSearch || '');
+  }, [propSearch]);
 
-  handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ search: e.target.value });
+  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
-    this.setState({ search: value });
-    localStorage.setItem('search-makholodova', JSON.stringify(value.trim()));
+    setSearch(value);
   };
 
-  handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    this.props.onSearchChange(this.state.search.trim());
+    onSearchChange(search.trim());
   };
 
-  render(): ReactNode {
-    const { search } = this.state;
-    return (
-      <form onSubmit={this.handleSubmit} className="search-container">
-        <BaseInput
-          type="search"
-          placeholder="Search..."
-          value={search}
-          onChange={this.handleInput}
-        />
-        <BaseButton className="header-button" type="submit">
-          Search
-        </BaseButton>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit} className="search-container">
+      <BaseInput
+        type="search"
+        placeholder="Search..."
+        value={search}
+        onChange={handleInput}
+      />
+      <BaseButton className="header-button" type="submit">
+        Search
+      </BaseButton>
+    </form>
+  );
+};
+export default Search;

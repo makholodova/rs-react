@@ -1,4 +1,8 @@
-﻿import type { CardProps, NamedAPIResource } from 'types/components.ts';
+﻿import type {
+  CardProps,
+  NamedAPIResource,
+  PokemonDetailProps,
+} from 'types/components.ts';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -18,8 +22,10 @@ class PokemonService {
     return detailed.filter((item) => item !== null);
   }
 
-  async getAll(limit = 30): Promise<CardProps[]> {
-    const res = await fetch(`${BASE_URL}/pokemon?limit=${limit}`);
+  async getAll(offset = 0, limit = 20): Promise<CardProps[]> {
+    const res = await fetch(
+      `${BASE_URL}/pokemon?offset=${offset}&limit=${limit}`
+    );
     const data = await res.json();
     const results: { name: string; url: string }[] = data.results;
 
@@ -55,6 +61,33 @@ class PokemonService {
     const data = await res.json();
     this.allNames = data.results;
     return this.allNames;
+  }
+
+  public async getById(id: number): Promise<PokemonDetailProps | null> {
+    try {
+      const res = await fetch(`${BASE_URL}/pokemon/${id}`);
+      const data = await res.json();
+      return {
+        name: data.name,
+        id: data.id,
+        image: data.sprites?.other?.['official-artwork']?.front_default,
+        height: data.height,
+        weight: data.weight,
+        types: data.types.map((t: { type: { name: string } }) => t.type.name),
+        abilities: data.abilities.map(
+          (a: { ability: { name: string } }) => a.ability.name
+        ),
+        stats: data.stats.map(
+          (s: { stat: { name: string }; base_stat: number }) => ({
+            name: s.stat.name,
+            base: s.base_stat,
+          })
+        ),
+      };
+    } catch (err) {
+      console.error(`Ошибка при загрузке по id=${id}:`, err);
+      return null;
+    }
   }
 }
 

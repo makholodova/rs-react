@@ -1,9 +1,11 @@
 ﻿.card-list {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
   justify-content: center;
   gap: 30px;
+
+  max-height: 50vh;
+  overflow-y: auto;
 }
 .not-found-message {
   margin-top: 50px;

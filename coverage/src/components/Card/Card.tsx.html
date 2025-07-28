@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>41/41</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>41/41</span>
             </div>
         
             
@@ -113,37 +113,31 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
@@ -160,11 +154,6 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
@@ -172,62 +161,58 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">﻿import { Component, type ReactNode } from 'react';
-import type { CardProps, CardState } from 'types/components.ts';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">﻿import { type FC, useMemo, useState } from 'react';
+import type { CardProps } from 'types/components.ts';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
 import './Card.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { capitalize } from '../../units/capitalize .ts';
 &nbsp;
-export default class Card extends Component&lt;CardProps, CardState&gt; {
-  color: string;
+const Card: FC&lt;CardProps&gt; = ({ name, id, weight, height }) =&gt; {
+  const [imageLoaded, setImageLoaded] = useState(false);
 &nbsp;
-  constructor(props: CardProps) {
-    super(props);
-    this.state = {
-      imageLoaded: false,
-    };
-    this.color = getRandomColorRGB();
-  }
+  const imageUrl = getPokemonImageUrl(id);
+  const color = useMemo(() =&gt; getRandomColorRGB(), []);
 &nbsp;
-  handleImageLoad = (): void =&gt; {
-    this.setState({ imageLoaded: true });
+  const navigate = useNavigate();
+  const location = useLocation();
+&nbsp;
+  const handleClick = (): void =&gt; {
+    navigate(`/pokemon/${id}${location.search}`);
   };
 &nbsp;
-  render(): ReactNode {
-    const { name, id, weight, height } = this.props;
-    const { imageLoaded } = this.state;
-    const imageUrl = getPokemonImageUrl(id);
+  const handleImageLoad = (): void =&gt; {
+    setImageLoaded(true);
+  };
 &nbsp;
-    return (
-      &lt;div className="card"&gt;
-        &lt;div className="card__image"&gt;
-          {!imageLoaded &amp;&amp; &lt;CircleLoader /&gt;}
-          &lt;img
-            className="card__sprite"
-            src={imageUrl}
-            alt={name}
-            style={{ display: imageLoaded ? 'block' : 'none' }}
-            onLoad={this.handleImageLoad}
-          /&gt;
-        &lt;/div&gt;
-        &lt;div
-          className="card__title-wrapper"
-          style={{ backgroundColor: this.color }}
-        &gt;
-          &lt;h3 className="card__title"&gt;
-            {name.charAt(0).toUpperCase() + name.slice(1)}
-          &lt;/h3&gt;
-          &lt;div className="card__description"&gt;
-            &lt;p&gt;weight: {weight};&lt;/p&gt;
-            &lt;p&gt;height: {height}; &lt;/p&gt;
-          &lt;/div&gt;
+  return (
+    &lt;div onClick={handleClick} className="card"&gt;
+      &lt;div className="card__image"&gt;
+        {!imageLoaded &amp;&amp; &lt;CircleLoader /&gt;}
+        &lt;img
+          className="card__sprite"
+          src={imageUrl}
+          alt={name}
+          style={{ display: imageLoaded ? 'block' : 'none' }}
+          onLoad={handleImageLoad}
+        /&gt;
+      &lt;/div&gt;
+      &lt;div className="card__title-wrapper" style={{ backgroundColor: color }}&gt;
+        &lt;h3 className="card__title"&gt;{capitalize(name)}&lt;/h3&gt;
+        &lt;div className="card__description"&gt;
+          &lt;p&gt;weight: {weight};&lt;/p&gt;
+          &lt;p&gt;height: {height}; &lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-    );
-  }
-}
+    &lt;/div&gt;
+  );
+};
+&nbsp;
+export default Card;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -235,7 +220,7 @@ export default class Card extends Component&lt;CardProps, CardState&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-19T20:35:08.209Z
+                at 2025-07-26T09:46:28.701Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
