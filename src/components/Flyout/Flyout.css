@@ -1,0 +1,46 @@
+.flyout {
+  position: fixed;
+  z-index: 1;
+  right: 1rem;
+  bottom: 2rem;
+  background-color: var(--white);
+  border: 1px solid var(--grey-lighter);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+  border-radius: 0.5rem;
+  animation: appear 2s;
+}
+
+.flyout__content {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.7rem;
+}
+.flyout__title {
+  font-size: 1.2rem;
+  color: var(--grey-dark);
+}
+.flyout__title span {
+  color: var(--black);
+}
+
+.flyout__buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.download__icon {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes appear {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 1rem;
+    opacity: 1;
+  }
+}
