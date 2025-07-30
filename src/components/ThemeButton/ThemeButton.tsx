@@ -13,9 +13,9 @@ const ThemeButton: FC = () => {
   return (
     <BaseButton className="theme-toggle" onClick={toggleTheme}>
       {theme === 'light' ? (
-        <MoonIcon className="theme-toggle__icon" />
+        <MoonIcon data-testid="moon-icon" className="theme-toggle__icon" />
       ) : (
-        <SunIcon className="theme-toggle__icon" />
+        <SunIcon data-testid="sun-icon" className="theme-toggle__icon" />
       )}
     </BaseButton>
   );
