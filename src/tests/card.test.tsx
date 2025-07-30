@@ -3,6 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Card from '../components/Card/Card';
 import { MemoryRouter } from 'react-router-dom';
+import store from '../store/store.ts';
+import { Provider } from 'react-redux';
 
 vi.mock('components/CircleLoader/CircleLoader', () => ({
   default: (): JSX.Element => <div data-testid="circle-loader" />,
@@ -44,7 +46,9 @@ describe('Card component', () => {
   it('Circle  is renders name ang description', () => {
     render(
       <MemoryRouter>
-        <Card name="pikachu" id={1} weight={5} height={604} />
+        <Provider store={store}>
+          <Card name="pikachu" id={1} weight={5} height={604} />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -57,7 +61,9 @@ describe('Card component', () => {
   it('shows image after it loads', () => {
     render(
       <MemoryRouter>
-        <Card name="bulbasaur" id={2} weight={10} height={999} />
+        <Provider store={store}>
+          <Card name="bulbasaur" id={2} weight={10} height={999} />
+        </Provider>
       </MemoryRouter>
     );
     const image = screen.getByAltText(/bulbasaur/i);
@@ -68,7 +74,11 @@ describe('Card component', () => {
   });
 
   it('calls navigate with correct URL on card click', () => {
-    render(<Card name="bulbasaur" id={1} weight={5} height={10} />);
+    render(
+      <Provider store={store}>
+        <Card name="bulbasaur" id={1} weight={5} height={10} />{' '}
+      </Provider>
+    );
 
     const card = screen
       .getByRole('heading', { name: /bulbasaur/i })

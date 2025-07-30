@@ -1,10 +1,16 @@
 ﻿import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import App from '../App';
+import { Provider } from 'react-redux';
+import store from '../store/store.ts';
 
 describe('App component', () => {
   it('renders Header with links', () => {
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
 
     expect(screen.getByAltText(/logo/i)).toBeInTheDocument();
 

@@ -9,6 +9,8 @@ vi.mock('hooks/use-local-storage.ts', () => ({
 
 vi.mock('api/pokemon.ts');
 import Main from '../pages/MainPage/MainPage.tsx';
+import { Provider } from 'react-redux';
+import store from '../store/store.ts';
 
 const mockGetAll = PokemonService.getAll as Mock;
 const mockSearch = PokemonService.searchByPartialName as Mock;
@@ -27,7 +29,9 @@ describe('Main component', () => {
 
     render(
       <MemoryRouter initialEntries={['/']}>
-        <Main />
+        <Provider store={store}>
+          <Main />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -45,7 +49,9 @@ describe('Main component', () => {
 
     render(
       <MemoryRouter>
-        <Main />
+        <Provider store={store}>
+          <Main />
+        </Provider>
       </MemoryRouter>
     );
 
