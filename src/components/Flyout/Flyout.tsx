@@ -1,17 +1,18 @@
 ﻿import { type FC } from 'react';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import { useDispatch, useSelector } from 'react-redux';
-import type { StoreState } from '../../store/store.ts';
+
+import type { RootState } from '../../store/store.ts';
 import './Flyout.css';
 import { clearSelection } from '../../store/selectedItemsSlice.ts';
 import FloppyDiskIcon from '../../assets/floppy_disk.svg?react';
 import formatCharactersToCSV from '../../units/formatCharactersToCSV.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 
 const Flyout: FC = () => {
-  const selectedItems = useSelector(
-    (state: StoreState) => state.selectedItems.items
+  const selectedItems = useAppSelector(
+    (state: RootState) => state.selectedItems.items
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const isFlyoutVisible = Boolean(selectedItems.length);
 

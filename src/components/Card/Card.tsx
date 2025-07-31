@@ -1,5 +1,4 @@
 ﻿import { type FC, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import type { CardProps } from 'types/components.ts';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import { getRandomColorRGB } from '../../units/generate-colors.ts';
@@ -12,7 +11,8 @@ import {
   selectedItem,
   unselectedItem,
 } from '../../store/selectedItemsSlice.ts';
-import type { StoreState } from '../../store/store.ts';
+import type { RootState } from '../../store/store.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 
 const Card: FC<CardProps> = ({ name, id, weight, height }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -23,8 +23,8 @@ const Card: FC<CardProps> = ({ name, id, weight, height }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const dispatch = useDispatch();
-  const isSelected = useSelector((state: StoreState) =>
+  const dispatch = useAppDispatch();
+  const isSelected = useAppSelector((state: RootState) =>
     state.selectedItems.items.some((item: CardProps) => item.id === id)
   );
 
