@@ -10,6 +10,6 @@ it('renders About page', () => {
   );
 
   expect(
-    screen.getByRole('heading', { name: /марина холодова/i })
+    screen.getByRole('heading', { name: /Marina Kholodova/i })
   ).toBeInTheDocument();
 });
