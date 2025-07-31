@@ -5,13 +5,13 @@ import GitHubIcon from '../../assets/icon-github.svg?react';
 import RsSchoolIcon from '../../assets/rs-school-logo.svg?react';
 
 const info = {
-  name: 'Марина Холодова',
+  name: 'Marina Kholodova',
   role: 'Frontend Developer',
   github: 'https://github.com/makholodova',
   rsSchool: 'https://rs.school/courses/reactjs',
   githubUsername: 'makholodova',
   photo,
-  bio: 'Я Марина, frontend-разработчик. Вдохновляюсь горами и сноубордом — это мой способ перезагрузки. В разработку пришла из интереса к веб-технологиям, который перерос в увлечение созданием удобных и современных интерфейсов. Мне нравится делать интерфейсы, которые понятны и приятны в использовании. В будущем хочу развиваться в направлении frontend и участвовать в создании полезных продуктов.',
+  bio: "I'm Marina, a frontend developer. I'm inspired by mountains and snowboarding — it's my way to recharge. I got into development out of curiosity about web technologies, which grew into a passion for creating modern and user-friendly interfaces. I enjoy building interfaces that are intuitive and pleasant to use. In the future, I want to grow as a frontend specialist and contribute to creating meaningful and useful products.",
 };
 
 const About: FC = () => (
