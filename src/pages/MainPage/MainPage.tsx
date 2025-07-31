@@ -13,6 +13,7 @@ import {
   useOutlet,
   useSearchParams,
 } from 'react-router-dom';
+import Flyout from 'components/Flyout/Flyout.tsx';
 
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -94,6 +95,7 @@ const Main: FC = () => {
           <Outlet />
         </div>
       )}
+      <Flyout />
     </main>
   );
 };

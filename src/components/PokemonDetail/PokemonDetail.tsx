@@ -7,7 +7,7 @@ import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './PokemonDetail.css';
-import { capitalize } from '../../units/capitalize .ts';
+import { capitalize } from '../../units/capitalize.ts';
 
 const PokemonDetail: FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);

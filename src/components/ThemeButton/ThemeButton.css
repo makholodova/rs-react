@@ -1,0 +1,14 @@
+﻿.theme-toggle,
+.theme-toggle:hover {
+  background-color: transparent;
+  padding: 0;
+}
+
+.theme-toggle__icon {
+  width: 25px;
+  height: 25px;
+  transition: color 0.2s ease;
+}
+.theme-toggle__icon:hover {
+  color: var(--yellow);
+}

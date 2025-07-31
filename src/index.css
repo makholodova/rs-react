@@ -8,6 +8,7 @@
 }
 
 :root {
+  --bg: #ffffff;
   --white: #f6f6f6;
   --black: #0c0c0c;
   --grey: #ababab;
@@ -20,6 +21,29 @@
   --yellow-light: #fffcc7;
   --green: #169b00;
   --red: #ff0000;
+  --red-light: rgba(255, 0, 0, 0.8);
   --blue: #1323cd;
   --blue-hover: rgb(11, 27, 140);
+}
+
+.dark {
+  --bg: #f0f0f0;
+  --white: #1a1a1a;
+  --black: #eaeaea;
+  --grey: #888888;
+  --grey-light: #444444;
+  --grey-lighter: rgba(100, 100, 100, 1);
+  --grey-dark: #bbbbbb;
+  --grey-not-active: #555555;
+  --grey-light-hover: rgba(120, 120, 120, 0.3);
+  --yellow: #c8b900;
+  --yellow-light: #8b862e;
+  --green: #3cb043;
+  --red: #ff4c4c;
+  --red-light: rgba(255, 76, 76, 0.6);
+  --blue: #6c80ff;
+  --blue-hover: rgb(90, 110, 230);
+}
+.app {
+  background-color: var(--bg);
 }

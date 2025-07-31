@@ -2,6 +2,7 @@
 import logo from 'assets/logo-pokemon.png';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import ThemeButton from 'components/ThemeButton/ThemeButton.tsx';
 
 const Header: FC = () => {
   return (
@@ -11,6 +12,7 @@ const Header: FC = () => {
           <img src={logo} alt="Logo" className="header__image" />
         </Link>
         <nav className="header__nav">
+          <ThemeButton />
           <Link className="header__nav-link" to="/">
             Main
           </Link>
