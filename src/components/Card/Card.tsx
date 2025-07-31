@@ -5,7 +5,7 @@ import { getRandomColorRGB } from '../../units/generate-colors.ts';
 import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
 import './Card.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { capitalize } from '../../units/capitalize .ts';
+import { capitalize } from '../../units/capitalize.ts';
 import HeartIcon from '../../assets/heart.svg?react';
 import {
   selectedItem,
