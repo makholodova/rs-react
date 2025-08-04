@@ -1,19 +1,17 @@
-﻿import { type FC, useEffect, useState } from 'react';
+﻿import { type FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { PokemonDetailProps } from 'types/components.ts';
-import PokemonService from 'api/pokemon.ts';
 import CloseIcon from '../../assets/close.svg?react';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './PokemonDetail.css';
 import { capitalize } from '../../units/capitalize.ts';
+import { useGetPokemonByIdQuery } from 'api/pokemon.ts';
 
 const PokemonDetail: FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [pokemon, setPokemon] = useState<PokemonDetailProps | null>(null);
+  const numericId = Number(id);
   const navigate = useNavigate();
 
   const handleClose = (): void => {
@@ -26,24 +24,10 @@ const PokemonDetail: FC = () => {
     setImageLoaded(true);
   };
 
-  useEffect(() => {
-    if (!id) return;
+  const { data: pokemon, isLoading, error } = useGetPokemonByIdQuery(numericId);
 
-    const fetchDetails = async (): Promise<void> => {
-      try {
-        setLoading(true);
-        const data = await PokemonService.getById(Number(id));
-        setPokemon(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetails();
-  }, [id]);
-
-  if (loading) return <PokemonLoader />;
-  if (!pokemon) return <div>Pokemon not found</div>;
+  if (isLoading) return <PokemonLoader />;
+  if (error || !pokemon) return <div>Pokemon not found</div>;
 
   return (
     <>

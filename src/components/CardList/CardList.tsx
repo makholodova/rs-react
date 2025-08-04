@@ -1,8 +1,8 @@
 ﻿import { type FC } from 'react';
 import type { CardListProps } from 'types/components.ts';
-import Card from 'components/Card/Card.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './CardList.css';
+import PokemonCardLoader from 'components/Card/PokemonCardLoader.tsx';
 
 const CardList: FC<CardListProps> = ({
   items,
@@ -25,7 +25,7 @@ const CardList: FC<CardListProps> = ({
   return (
     <div className="card-list">
       {items.map((item, index) => (
-        <Card key={index} {...item} />
+        <PokemonCardLoader key={index} name={item.name} />
       ))}
     </div>
   );

@@ -1,6 +1,9 @@
-﻿import { type FC, useEffect, useState } from 'react';
+﻿import { type FC, useState } from 'react';
 import type { CardProps } from 'types/components.ts';
-import PokemonService from 'api/pokemon.ts';
+import {
+  useGetAllPokemonsQuery,
+  useGetPokemonByNameQuery,
+} from 'api/pokemon.ts';
 import CardList from 'components/CardList/CardList.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import './MainPage.css';
@@ -18,9 +21,6 @@ import Flyout from 'components/Flyout/Flyout.tsx';
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useLocalStorage('search-makholodova', '');
-  const [items, setItems] = useState<CardProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isFetchError, setIsFetchError] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   const limit = 20;
@@ -32,33 +32,45 @@ const Main: FC = () => {
 
   const showDetails = /^\/pokemon\/\d+$/.test(location.pathname);
 
+  const items: CardProps[] = [];
+
+  const {
+    data: searchData,
+    error: searchError,
+    isLoading: isSearchLoading,
+  } = useGetPokemonByNameQuery(search.toLowerCase());
+
+  const {
+    data: listData,
+    error: listError,
+    isLoading: isListLoading,
+  } = useGetAllPokemonsQuery({ offset, limit });
+  if (search.trim() && searchData) {
+    items.push({
+      name: searchData.name,
+      height: searchData.height,
+      id: searchData.id,
+      weight: searchData.weight,
+    });
+  } else if (listData?.results) {
+    items.push(
+      ...listData.results.map((item) => {
+        const idMatch = item.url.match(/\/pokemon\/(\d+)\//);
+        const id = idMatch ? parseInt(idMatch[1], 10) : 0;
+
+        return {
+          name: item.name,
+          id,
+          weight: 0,
+          height: 0,
+        };
+      })
+    );
+  }
+
   const handlePageChange = (newPage: number): void => {
     setSearchParams({ page: newPage.toString() });
   };
-
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      setLoading(true);
-      setIsFetchError(false);
-
-      try {
-        let result: CardProps[];
-
-        if (search.trim()) {
-          result = await PokemonService.searchByPartialName(search);
-        } else {
-          result = await PokemonService.getAll(offset, limit);
-        }
-        setItems(result);
-      } catch {
-        setIsFetchError(true);
-        setItems([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [search, offset]);
 
   const handleCrash = (): void => {
     setHasError(true);
@@ -67,6 +79,10 @@ const Main: FC = () => {
   if (hasError) {
     throw new Error('Something went wrong.');
   }
+
+  const isLoading = search.trim() ? isSearchLoading : isListLoading;
+  const isFetchError = Boolean(search.trim() ? searchError : listError);
+
   return (
     <main className="main">
       <div className={`main__left ${outlet ? 'main__left--disabled' : ''}`}>
@@ -79,7 +95,7 @@ const Main: FC = () => {
         <CardList
           search={search}
           items={items}
-          loading={loading}
+          loading={isLoading}
           isFetchError={isFetchError}
         />
 
