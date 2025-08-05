@@ -24,3 +24,21 @@
   pointer-events: none;
   opacity: 0.4;
 }
+
+.main-controller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+}
+.refresh__button {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+}
+.refresh__icon {
+  width: 20px;
+  height: 20px;
+  transition: color 0.2s ease;
+}
