@@ -27,7 +27,15 @@ const PokemonDetail: FC = () => {
   const { data: pokemon, isLoading, error } = useGetPokemonByIdQuery(numericId);
 
   if (isLoading) return <PokemonLoader />;
-  if (error || !pokemon) return <div>Pokemon not found</div>;
+  if (error || !pokemon)
+    return (
+      <div>
+        <BaseButton className="close-button" onClick={handleClose}>
+          <CloseIcon />
+        </BaseButton>
+        <div>Pokemon not found</div>
+      </div>
+    );
 
   return (
     <>
@@ -72,7 +80,7 @@ const PokemonDetail: FC = () => {
             <ul className="pokemon-detail__stats">
               {pokemon.stats?.map((stat) => (
                 <li key={stat.name}>
-                  {stat.name}: {stat.base}
+                  {capitalize(stat.name)}: {stat.base}
                 </li>
               ))}
             </ul>

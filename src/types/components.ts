@@ -1,10 +1,5 @@
 ﻿import type { ReactNode } from 'react';
 
-export interface SearchProps {
-  search: string;
-  onSearchChange: (value: string) => void;
-}
-
 export type NamedAPIResource = {
   name: string;
   url: string;
@@ -13,8 +8,6 @@ export type NamedAPIResource = {
 export interface CardProps {
   name: string;
   id: number;
-  height: number;
-  weight: number;
   url?: string;
 }
 
@@ -27,6 +20,28 @@ export interface PokemonDetailProps {
   image: string;
   abilities: string[];
   stats: { name: string; base: number }[];
+}
+
+export interface RawPokemon {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  sprites: {
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
+  };
+  types: { type: { name: string } }[];
+  abilities: { ability: { name: string } }[];
+  stats: { stat: { name: string }; base_stat: number }[];
+}
+
+export interface SearchProps {
+  search: string;
+  onSearchChange: (value: string) => void;
 }
 
 export interface CardListProps {
