@@ -1,6 +1,7 @@
 ﻿import { type FC, useMemo } from 'react';
 import type { CardProps } from 'types/components.ts';
 import {
+  pokemonApi,
   useGetAllPokemonQuery,
   useGetPokemonByNameQuery,
 } from 'api/pokemon.ts';
@@ -13,10 +14,12 @@ import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import Flyout from 'components/Flyout/Flyout.tsx';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import RefreshIcon from '../../assets/refresh.svg?react';
+import { useDispatch } from 'react-redux';
 
 const Main: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useLocalStorage('search-makholodova', '');
+  const dispatch = useDispatch();
 
   const limit = 20;
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
@@ -28,13 +31,13 @@ const Main: FC = () => {
   const {
     data: searchData,
     error: searchError,
-    isLoading: isSearchLoading,
+    isFetching: isSearchFetching,
   } = useGetPokemonByNameQuery(search.toLowerCase());
 
   const {
     data: listData,
     error: listError,
-    isLoading: isListLoading,
+    isFetching: isListFetching,
   } = useGetAllPokemonQuery({ offset, limit });
 
   const items: CardProps[] = useMemo(() => {
@@ -58,16 +61,18 @@ const Main: FC = () => {
   const isSearching = Boolean(search.trim());
   const isNoResults =
     isSearching &&
-    !isSearchLoading &&
+    !isSearchFetching &&
     (!searchData || !searchData.id || !searchData.name);
 
   const handlePageChange = (newPage: number): void => {
     setSearchParams({ page: newPage.toString() });
   };
   const handleRefresh = (): void => {
-    console.log('handleRefresh');
+    dispatch(
+      pokemonApi.util.invalidateTags([{ type: 'PokemonList', id: 'LIST' }])
+    );
   };
-  const isLoading = search.trim() ? isSearchLoading : isListLoading;
+  const isLoading = search.trim() ? isSearchFetching : isListFetching;
   const isFetchError = Boolean(search.trim() ? searchError : listError);
 
   return (
@@ -77,16 +82,20 @@ const Main: FC = () => {
       >
         <Search search={search} onSearchChange={setSearch} />
 
-        <div className="main-controller">
-          <BaseButton className="refresh__button" onClick={handleRefresh}>
-            <RefreshIcon className="refresh__icon" />
-          </BaseButton>
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-            isNextDisabled={isSearching || isNoResults || items.length < limit}
-          />
-        </div>
+        {!search.trim() && (
+          <div className="main-controller">
+            <BaseButton className="refresh__button" onClick={handleRefresh}>
+              <RefreshIcon className="refresh__icon" />
+            </BaseButton>
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              isNextDisabled={
+                isSearching || isNoResults || items.length < limit
+              }
+            />
+          </div>
+        )}
 
         <CardList
           search={search}

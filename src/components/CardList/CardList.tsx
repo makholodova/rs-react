@@ -15,7 +15,13 @@ const CardList: FC<CardListProps> = ({
     return <PokemonLoader />;
   }
   if (isFetchError) {
-    return <p className="error">Something went wrong..</p>;
+    return (
+      <>
+        {' '}
+        <p className="error">Oops! Something went wrong</p>
+        <p className="error">Pokemon not found</p>
+      </>
+    );
   }
   if (!loading && items.length === 0) {
     return (

@@ -12,6 +12,8 @@ const BASE_URL = 'https://pokeapi.co/api/v2';
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}` }),
+  keepUnusedDataFor: 300,
+  tagTypes: ['Pokemon', 'PokemonList'],
   endpoints: (build) => ({
     getAllPokemon: build.query<
       { results: NamedAPIResource[] },
@@ -19,6 +21,7 @@ export const pokemonApi = createApi({
     >({
       query: ({ offset = 0, limit = 20 }) =>
         `/pokemon?offset=${offset}&limit=${limit}`,
+      providesTags: () => [{ type: 'PokemonList', id: 'LIST' } as const],
     }),
 
     getPokemonByName: build.query<CardProps, string>({
@@ -27,6 +30,7 @@ export const pokemonApi = createApi({
         id: raw.id,
         name: raw.name,
       }),
+      providesTags: (_result, _error, name) => [{ type: 'Pokemon', id: name }],
     }),
 
     getPokemonById: build.query<PokemonDetailProps, number>({
@@ -44,6 +48,7 @@ export const pokemonApi = createApi({
           base: s.base_stat,
         })),
       }),
+      providesTags: (_result, _error, id) => [{ type: 'Pokemon', id }],
     }),
   }),
 });

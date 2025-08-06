@@ -6,13 +6,16 @@ import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './PokemonDetail.css';
 import { capitalize } from '../../units/capitalize.ts';
-import { useGetPokemonByIdQuery } from 'api/pokemon.ts';
+import { pokemonApi, useGetPokemonByIdQuery } from 'api/pokemon.ts';
+import { useDispatch } from 'react-redux';
+import RefreshIcon from '../../assets/refresh.svg?react';
 
 const PokemonDetail: FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { id } = useParams();
   const numericId = Number(id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClose = (): void => {
     navigate({
@@ -23,7 +26,9 @@ const PokemonDetail: FC = () => {
   const handleImageLoad = (): void => {
     setImageLoaded(true);
   };
-
+  const handleRefresh = (): void => {
+    dispatch(pokemonApi.util.invalidateTags([{ type: 'Pokemon', id }]));
+  };
   const { data: pokemon, isLoading, error } = useGetPokemonByIdQuery(numericId);
 
   if (isLoading) return <PokemonLoader />;
@@ -39,9 +44,15 @@ const PokemonDetail: FC = () => {
 
   return (
     <>
-      <BaseButton className="close-button" onClick={handleClose}>
-        <CloseIcon />
-      </BaseButton>
+      <div className="pokemon-detail__controls">
+        <BaseButton className="refresh__button" onClick={handleRefresh}>
+          <RefreshIcon className="refresh__icon" />
+        </BaseButton>
+        <BaseButton className="close-button" onClick={handleClose}>
+          <CloseIcon />
+        </BaseButton>
+      </div>
+
       <div className="pokemon-detail">
         <div className="pokemon-detail__image">
           {!imageLoaded && <CircleLoader />}

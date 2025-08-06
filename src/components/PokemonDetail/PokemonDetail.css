@@ -1,4 +1,17 @@
-﻿.close-button {
+﻿.pokemon-detail__controls {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.refresh__button {
+  width: 40px;
+  height: 40px;
+}
+.close-button {
+  padding: 0;
   background: transparent;
   color: var(--blue);
   transition:
