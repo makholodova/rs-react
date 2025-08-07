@@ -22,7 +22,7 @@ describe('Flyout component', () => {
   it('Flyout renders with selected items count', () => {
     const store = mockStore({
       selectedItems: {
-        items: [{ name: 'Pikachu', id: 1, height: 125, weight: 30 }],
+        items: [{ name: 'Pikachu', id: 1 }],
       },
     });
     render(

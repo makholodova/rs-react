@@ -47,14 +47,12 @@ describe('Card component', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Card name="pikachu" id={1} weight={5} height={604} />
+          <Card name="pikachu" id={1} />
         </Provider>
       </MemoryRouter>
     );
 
     expect(screen.getByText(/pikachu/i)).toBeInstanceOf(HTMLElement);
-    expect(screen.getByText(/weight: 5/i)).toBeInstanceOf(HTMLElement);
-    expect(screen.getByText(/height: 604/i)).toBeInstanceOf(HTMLElement);
     expect(screen.getByTestId('circle-loader')).toBeInTheDocument();
   });
 
@@ -62,7 +60,7 @@ describe('Card component', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Card name="bulbasaur" id={2} weight={10} height={999} />
+          <Card name="bulbasaur" id={2} />
         </Provider>
       </MemoryRouter>
     );
@@ -76,7 +74,7 @@ describe('Card component', () => {
   it('calls navigate with correct URL on card click', () => {
     render(
       <Provider store={store}>
-        <Card name="bulbasaur" id={1} weight={5} height={10} />{' '}
+        <Card name="bulbasaur" id={1} />{' '}
       </Provider>
     );
 
