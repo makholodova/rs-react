@@ -9,13 +9,17 @@ describe('Search component', () => {
 
   it('renders with initial search prop', () => {
     render(<Search search="pikachu" onSearchChange={() => {}} />);
-    const input = screen.getByPlaceholderText(/search/i);
+    const input = screen.getByPlaceholderText(
+      /Enter the full name of the pokemon.../i
+    );
     expect(input).toHaveValue('pikachu');
   });
 
-  it('updates state and localStorage on input change', () => {
+  it('updates state on input change', () => {
     render(<Search search="" onSearchChange={() => {}} />);
-    const input = screen.getByPlaceholderText(/search/i);
+    const input = screen.getByPlaceholderText(
+      /Enter the full name of the pokemon.../i
+    );
 
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
 
@@ -26,7 +30,9 @@ describe('Search component', () => {
     const onSearchChange = vi.fn();
     render(<Search search="" onSearchChange={onSearchChange} />);
 
-    const input = screen.getByPlaceholderText(/search/i);
+    const input = screen.getByPlaceholderText(
+      /Enter the full name of the pokemon.../i
+    );
     fireEvent.change(input, { target: { value: ' charmander  ' } });
 
     const form = input.closest('form');
@@ -40,7 +46,9 @@ describe('Search component', () => {
     const { rerender } = render(
       <Search search="first" onSearchChange={() => {}} />
     );
-    const input = screen.getByPlaceholderText(/search/i);
+    const input = screen.getByPlaceholderText(
+      /Enter the full name of the pokemon.../i
+    );
     expect(input).toHaveValue('first');
 
     rerender(<Search search="second" onSearchChange={() => {}} />);

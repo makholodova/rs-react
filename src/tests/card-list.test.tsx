@@ -47,14 +47,10 @@ describe('CardList  component', () => {
       {
         name: 'pikachu',
         id: 1,
-        height: 4,
-        weight: 60,
       },
       {
         name: 'bulbasaur',
         id: 2,
-        height: 7,
-        weight: 80,
       },
     ];
 

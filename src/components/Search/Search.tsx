@@ -31,7 +31,7 @@ const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
     <form onSubmit={handleSubmit} className="search-container">
       <BaseInput
         type="search"
-        placeholder="Search..."
+        placeholder="Enter the full name of the pokemon..."
         value={search}
         onChange={handleInput}
       />

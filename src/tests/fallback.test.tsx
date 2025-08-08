@@ -6,6 +6,7 @@ describe('Fallback component', () => {
   it('renders error message and reset button', () => {
     const mockReload = vi.fn();
     render(<Fallback onReload={mockReload} />);
+
     expect(
       screen.getByText(/Sorry\. Something went wrong\.\.\./i)
     ).toBeInTheDocument();

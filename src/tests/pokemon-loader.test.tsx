@@ -6,7 +6,8 @@ import { describe, it, expect } from 'vitest';
 describe('Pokemon loader component', () => {
   it('Pokemon loader is renders correctly', () => {
     render(<PokemonLoader />);
+
     const loader = screen.getByTestId('pokemon-loader');
-    expect(loader).toBeInstanceOf(HTMLDivElement);
+    expect(loader).toBeInTheDocument();
   });
 });

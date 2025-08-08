@@ -1,8 +1,7 @@
 ﻿import { type FC } from 'react';
 import type { CardListProps } from 'types/components.ts';
-import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './CardList.css';
-
+import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import Card from 'components/Card/Card.tsx';
 
 const CardList: FC<CardListProps> = ({

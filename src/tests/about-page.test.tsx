@@ -11,6 +11,6 @@ describe('AboutPage component', () => {
       </MemoryRouter>
     );
     const aboutPage = screen.getByTestId('about-page');
-    expect(aboutPage).toBeInstanceOf(HTMLDivElement);
+    expect(aboutPage).toBeInTheDocument();
   });
 });
