@@ -7,9 +7,11 @@ import ThemeContext from '../../context/them-context.ts';
 
 const ThemeButton: FC = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+
   const toggleTheme = (): void => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
+
   return (
     <BaseButton className="theme-toggle" onClick={toggleTheme}>
       {theme === 'light' ? (
