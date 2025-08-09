@@ -1,4 +1,6 @@
 ﻿.base-button {
+  display: flex;
+  align-items: center;
   padding: 11px 16px;
   border-radius: 8px;
   font-size: 1rem;

@@ -6,6 +6,7 @@
 
   max-height: 50vh;
   overflow-y: auto;
+  margin-bottom: 5rem;
 }
 .not-found-message {
   margin-top: 50px;

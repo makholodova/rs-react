@@ -14,7 +14,7 @@ import {
 import type { RootState } from '../../store/store.ts';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 
-const Card: FC<CardProps> = ({ name, id, weight, height }) => {
+const Card: FC<CardProps> = ({ name, id }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const imageUrl = getPokemonImageUrl(id);
@@ -38,8 +38,8 @@ const Card: FC<CardProps> = ({ name, id, weight, height }) => {
 
   const handleCheckboxChange = (): void => {
     if (isSelected) {
-      dispatch(unselectedItem({ name, id, weight, height, imageUrl }));
-    } else dispatch(selectedItem({ name, id, weight, height, imageUrl }));
+      dispatch(unselectedItem({ name, id, imageUrl }));
+    } else dispatch(selectedItem({ name, id, imageUrl }));
   };
 
   return (
@@ -73,10 +73,6 @@ const Card: FC<CardProps> = ({ name, id, weight, height }) => {
       </div>
       <div className="card__title-wrapper" style={{ backgroundColor: color }}>
         <h3 className="card__title">{capitalize(name)}</h3>
-        <div className="card__description">
-          <p>weight: {weight};</p>
-          <p>height: {height}; </p>
-        </div>
       </div>
     </div>
   );

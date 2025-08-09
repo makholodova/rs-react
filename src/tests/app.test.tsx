@@ -13,14 +13,17 @@ describe('App component', () => {
     );
 
     expect(screen.getByAltText(/logo/i)).toBeInTheDocument();
-
     expect(screen.getByRole('link', { name: /main/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument();
   });
 
   it('renders NotFound page for unknown route', () => {
     window.history.pushState({}, '', '/some-unknown-page');
-    render(<App />);
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
 
     expect(screen.getByText(/not found/i)).toBeInTheDocument();
   });

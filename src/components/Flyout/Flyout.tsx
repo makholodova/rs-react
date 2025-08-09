@@ -1,12 +1,11 @@
 ﻿import { type FC } from 'react';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-
-import type { RootState } from '../../store/store.ts';
-import './Flyout.css';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { clearSelection } from '../../store/selectedItemsSlice.ts';
+import type { RootState } from '../../store/store.ts';
+import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import FloppyDiskIcon from '../../assets/floppy_disk.svg?react';
 import formatCharactersToCSV from '../../units/formatCharactersToCSV.ts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import './Flyout.css';
 
 const Flyout: FC = () => {
   const selectedItems = useAppSelector(
@@ -18,10 +17,6 @@ const Flyout: FC = () => {
 
   const handleUnselectAll = (): void => {
     dispatch(clearSelection());
-  };
-
-  const handleDownload = (): void => {
-    if (!selectedItems.length) return;
   };
 
   const getUrl = (): string => {
@@ -39,8 +34,12 @@ const Flyout: FC = () => {
           <div className="flyout__buttons">
             <BaseButton onClick={handleUnselectAll}>Unselect all</BaseButton>
 
-            <a href={getUrl()} download={`${selectedItems.length}_items.csv`}>
-              <BaseButton onClick={handleDownload}>
+            <a
+              data-testid="download-link"
+              href={getUrl()}
+              download={`${selectedItems.length}_items.csv`}
+            >
+              <BaseButton>
                 <FloppyDiskIcon className="download__icon" />
               </BaseButton>
             </a>

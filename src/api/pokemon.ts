@@ -2,93 +2,58 @@
   CardProps,
   NamedAPIResource,
   PokemonDetailProps,
+  RawPokemon,
 } from 'types/components.ts';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
-class PokemonService {
-  public allNames: NamedAPIResource[] = [];
+export const pokemonApi = createApi({
+  reducerPath: 'pokemonApi',
+  baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}` }),
+  keepUnusedDataFor: 300,
+  tagTypes: ['Pokemon', 'PokemonList'],
+  endpoints: (build) => ({
+    getAllPokemon: build.query<
+      { results: NamedAPIResource[] },
+      { offset: number; limit: number }
+    >({
+      query: ({ offset = 0, limit = 20 }) =>
+        `/pokemon?offset=${offset}&limit=${limit}`,
+      providesTags: () => [{ type: 'PokemonList', id: 'LIST' } as const],
+    }),
 
-  async searchByPartialName(query: string): Promise<CardProps[]> {
-    const names = await this.loadAllNames();
-    const filtered = names.filter((p) =>
-      p.name.toLowerCase().includes(query.toLowerCase())
-    );
+    getPokemonByName: build.query<CardProps, string>({
+      query: (name) => `pokemon/${name.toLowerCase()}`,
+      transformResponse: (raw: RawPokemon): CardProps => ({
+        id: raw.id,
+        name: raw.name,
+      }),
+      providesTags: (_result, _error, name) => [{ type: 'Pokemon', id: name }],
+    }),
 
-    const detailed = await Promise.all(
-      filtered.map(async (item) => this.getPokemonDetails(item))
-    );
-
-    return detailed.filter((item) => item !== null);
-  }
-
-  async getAll(offset = 0, limit = 20): Promise<CardProps[]> {
-    const res = await fetch(
-      `${BASE_URL}/pokemon?offset=${offset}&limit=${limit}`
-    );
-    const data = await res.json();
-    const results: { name: string; url: string }[] = data.results;
-
-    const detailedItems = await Promise.all(
-      results.map(async (item) => this.getPokemonDetails(item))
-    );
-
-    return detailedItems.filter((item) => item !== null);
-  }
-
-  public async getPokemonDetails(
-    item: NamedAPIResource
-  ): Promise<CardProps | null> {
-    try {
-      const res = await fetch(item.url);
-      const data = await res.json();
-      return {
-        name: data.name,
-        id: data.id,
-        height: data.height,
-        weight: data.weight,
-      };
-    } catch (err) {
-      console.error(`Ошибка при загрузке ${item.name}:`, err);
-      return null;
-    }
-  }
-
-  public async loadAllNames(): Promise<NamedAPIResource[]> {
-    if (this.allNames.length > 0) return this.allNames;
-
-    const res = await fetch(`${BASE_URL}/pokemon?limit=1302`);
-    const data = await res.json();
-    this.allNames = data.results;
-    return this.allNames;
-  }
-
-  public async getById(id: number): Promise<PokemonDetailProps | null> {
-    try {
-      const res = await fetch(`${BASE_URL}/pokemon/${id}`);
-      const data = await res.json();
-      return {
-        name: data.name,
-        id: data.id,
-        image: data.sprites?.other?.['official-artwork']?.front_default,
-        height: data.height,
-        weight: data.weight,
-        types: data.types.map((t: { type: { name: string } }) => t.type.name),
-        abilities: data.abilities.map(
-          (a: { ability: { name: string } }) => a.ability.name
-        ),
-        stats: data.stats.map(
-          (s: { stat: { name: string }; base_stat: number }) => ({
-            name: s.stat.name,
-            base: s.base_stat,
-          })
-        ),
-      };
-    } catch (err) {
-      console.error(`Ошибка при загрузке по id=${id}:`, err);
-      return null;
-    }
-  }
-}
-
-export default new PokemonService();
+    getPokemonById: build.query<PokemonDetailProps, number>({
+      query: (id) => `pokemon/${id}`,
+      transformResponse: (raw: RawPokemon): PokemonDetailProps => ({
+        id: raw.id,
+        name: raw.name,
+        image: raw.sprites?.other?.['official-artwork']?.front_default,
+        height: raw.height,
+        weight: raw.weight,
+        types: raw.types.map((t) => t.type.name),
+        abilities: raw.abilities.map((a) => a.ability.name),
+        stats: raw.stats.map((s) => ({
+          name: s.stat.name,
+          base: s.base_stat,
+        })),
+      }),
+      providesTags: (_result, _error, id) => [{ type: 'Pokemon', id }],
+    }),
+  }),
+});
+export const {
+  useGetAllPokemonQuery,
+  useGetPokemonByNameQuery,
+  useGetPokemonByIdQuery,
+} = pokemonApi;

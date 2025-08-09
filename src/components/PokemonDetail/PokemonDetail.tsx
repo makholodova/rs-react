@@ -1,20 +1,21 @@
-﻿import { type FC, useEffect, useState } from 'react';
+﻿import { type FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { PokemonDetailProps } from 'types/components.ts';
-import PokemonService from 'api/pokemon.ts';
 import CloseIcon from '../../assets/close.svg?react';
 import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
 import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
 import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
 import './PokemonDetail.css';
 import { capitalize } from '../../units/capitalize.ts';
+import { pokemonApi, useGetPokemonByIdQuery } from 'api/pokemon.ts';
+import { useDispatch } from 'react-redux';
+import RefreshIcon from '../../assets/refresh.svg?react';
 
 const PokemonDetail: FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [pokemon, setPokemon] = useState<PokemonDetailProps | null>(null);
+  const numericId = Number(id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClose = (): void => {
     navigate({
@@ -25,31 +26,37 @@ const PokemonDetail: FC = () => {
   const handleImageLoad = (): void => {
     setImageLoaded(true);
   };
+  const handleRefresh = (): void => {
+    dispatch(pokemonApi.util.invalidateTags([{ type: 'Pokemon', id }]));
+  };
+  const {
+    data: pokemon,
+    isFetching,
+    error,
+  } = useGetPokemonByIdQuery(numericId);
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchDetails = async (): Promise<void> => {
-      try {
-        setLoading(true);
-        const data = await PokemonService.getById(Number(id));
-        setPokemon(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetails();
-  }, [id]);
-
-  if (loading) return <PokemonLoader />;
-  if (!pokemon) return <div>Pokemon not found</div>;
+  if (isFetching) return <PokemonLoader />;
+  if (error || !pokemon)
+    return (
+      <div>
+        <BaseButton className="close-button" onClick={handleClose}>
+          <CloseIcon />
+        </BaseButton>
+        <div>Pokemon not found</div>
+      </div>
+    );
 
   return (
     <>
-      <BaseButton className="close-button" onClick={handleClose}>
-        <CloseIcon />
-      </BaseButton>
+      <div className="pokemon-detail__controls">
+        <BaseButton className="refresh__button" onClick={handleRefresh}>
+          <RefreshIcon className="refresh__icon" />
+        </BaseButton>
+        <BaseButton className="close-button" onClick={handleClose}>
+          <CloseIcon />
+        </BaseButton>
+      </div>
+
       <div className="pokemon-detail">
         <div className="pokemon-detail__image">
           {!imageLoaded && <CircleLoader />}
@@ -88,7 +95,7 @@ const PokemonDetail: FC = () => {
             <ul className="pokemon-detail__stats">
               {pokemon.stats?.map((stat) => (
                 <li key={stat.name}>
-                  {stat.name}: {stat.base}
+                  {capitalize(stat.name)}: {stat.base}
                 </li>
               ))}
             </ul>

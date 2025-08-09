@@ -29,6 +29,7 @@ describe('ErrorBoundary component', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
   });
+
   it('calls window.location.reload when reset button is clicked', () => {
     const reloadMock = vi.fn();
 

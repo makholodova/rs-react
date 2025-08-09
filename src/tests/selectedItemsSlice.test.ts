@@ -9,8 +9,6 @@ describe('selectedItemsSlice', () => {
   const sampleItem: CardProps = {
     id: 1,
     name: 'Pikachu',
-    height: 100,
-    weight: 60,
   };
 
   it('should add an item if it is not already selected', () => {

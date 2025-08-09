@@ -25,7 +25,7 @@ describe('CardList  component', () => {
     render(
       <CardList search="" items={[]} loading={false} isFetchError={true} />
     );
-    expect(screen.getByText('Something went wrong..')).toBeInTheDocument();
+    expect(screen.getByText('Oops! Something went wrong')).toBeInTheDocument();
   });
 
   it('renders "no results" message when no items and not loading', () => {
@@ -47,14 +47,10 @@ describe('CardList  component', () => {
       {
         name: 'pikachu',
         id: 1,
-        height: 4,
-        weight: 60,
       },
       {
         name: 'bulbasaur',
         id: 2,
-        height: 7,
-        weight: 80,
       },
     ];
 
