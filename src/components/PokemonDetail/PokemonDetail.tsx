@@ -29,9 +29,13 @@ const PokemonDetail: FC = () => {
   const handleRefresh = (): void => {
     dispatch(pokemonApi.util.invalidateTags([{ type: 'Pokemon', id }]));
   };
-  const { data: pokemon, isLoading, error } = useGetPokemonByIdQuery(numericId);
+  const {
+    data: pokemon,
+    isFetching,
+    error,
+  } = useGetPokemonByIdQuery(numericId);
 
-  if (isLoading) return <PokemonLoader />;
+  if (isFetching) return <PokemonLoader />;
   if (error || !pokemon)
     return (
       <div>
