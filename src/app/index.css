@@ -64,3 +64,10 @@
   background-color: var(--bg);
   color: var(--black);
 }
+
+.container-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+}
