@@ -1,12 +1,8 @@
-﻿'use client';
-
-import { FC } from 'react';
-import { useRouter } from 'next/navigation';
-import BaseButton from '@/components/ui/BaseButton/BaseButton';
+﻿import { FC } from 'react';
 import styles from './NotFound.module.css';
+import Link from 'next/link';
 
 const NotFound: FC = () => {
-  const router = useRouter();
   return (
     <div data-testid="not-found-page" className={styles['container-not-found']}>
       <h2>404 — Page Not Found</h2>
@@ -14,7 +10,9 @@ const NotFound: FC = () => {
         Oops! The page you&rsquo;re looking for doesn&rsquo;t exist or has been
         moved.
       </p>
-      <BaseButton onClick={() => router.push('/')}>Go to Homepage</BaseButton>
+      <Link className={styles['not-found-link']} href="/">
+        Go to Homepage
+      </Link>
     </div>
   );
 };
