@@ -1,10 +1,10 @@
 ﻿import type { FC } from 'react';
-import './PokemonLoader.css';
+import styles from './PokemonLoader.module.css';
 
 const PokemonLoader: FC = () => {
   return (
-    <div className="pokemon-loader" data-testid="pokemon-loader">
-      <div className="pokeball"></div>
+    <div className={styles['pokemon-loader']} data-testid="pokemon-loader">
+      <div className={styles['pokeball']}></div>
     </div>
   );
 };
