@@ -1,9 +1,11 @@
-﻿import { type FC, useContext } from 'react';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import MoonIcon from '../../assets/moon.svg?react';
-import SunIcon from '../../assets/sun.svg?react';
-import './ThemeButton.css';
-import ThemeContext from '../../context/them-context.ts';
+﻿'use client';
+
+import { type FC, useContext } from 'react';
+import ThemeContext from '@/context/theme-context';
+import BaseButton from '@/components/ui/BaseButton/BaseButton';
+import MoonIcon from '@/assets/moon.svg';
+import SunIcon from '@/assets/sun.svg';
+import styles from './ThemeButton.module.css';
 
 const ThemeButton: FC = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -13,11 +15,17 @@ const ThemeButton: FC = () => {
   };
 
   return (
-    <BaseButton className="theme-toggle" onClick={toggleTheme}>
+    <BaseButton className={styles['theme-toggle']} onClick={toggleTheme}>
       {theme === 'light' ? (
-        <MoonIcon data-testid="moon-icon" className="theme-toggle__icon" />
+        <MoonIcon
+          data-testid="moon-icon"
+          className={styles['theme-toggle__icon']}
+        />
       ) : (
-        <SunIcon data-testid="sun-icon" className="theme-toggle__icon" />
+        <SunIcon
+          data-testid="sun-icon"
+          className={styles['theme-toggle__icon']}
+        />
       )}
     </BaseButton>
   );
