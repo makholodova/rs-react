@@ -1,5 +1,5 @@
 ﻿import { createSlice } from '@reduxjs/toolkit';
-import type { CardProps } from 'types/components.ts';
+import type { CardProps } from '@/types/components.ts';
 
 interface SelectedItemsState {
   items: CardProps[];
