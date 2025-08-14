@@ -5,10 +5,21 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: [{ loader: '@svgr/webpack', options: { icon: true } }]
+      use: [{ loader: '@svgr/webpack', options: { icon: true } }],
     });
     return config;
-  }
-}
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/PokeAPI/sprites/master/sprites/pokemon/**',
 
-export default nextConfig
+      },
+    ],
+  },
+};
+
+export default nextConfig;

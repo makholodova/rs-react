@@ -1,11 +1,12 @@
-﻿import { type FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { clearSelection } from '../../store/selectedItemsSlice.ts';
-import type { RootState } from '../../store/store.ts';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import FloppyDiskIcon from '../../assets/floppy_disk.svg?react';
-import formatCharactersToCSV from '../../units/formatCharactersToCSV.ts';
-import './Flyout.css';
+﻿'use client';
+import { type FC } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { clearSelection } from '@/store/selectedItemsSlice';
+import type { RootState } from '@/store/store';
+import BaseButton from '@/components/ui/BaseButton/BaseButton';
+import FloppyDiskIcon from '@/assets/floppy_disk.svg';
+import formatCharactersToCSV from '@/units/formatCharactersToCSV';
+import styles from './Flyout.module.css';
 
 const Flyout: FC = () => {
   const selectedItems = useAppSelector(
@@ -26,12 +27,12 @@ const Flyout: FC = () => {
   };
   if (isFlyoutVisible) {
     return (
-      <div className="flyout">
-        <div className="flyout__content">
-          <p className="flyout__title">
+      <div className={styles['flyout']}>
+        <div className={styles['flyout__content']}>
+          <p className={styles['flyout__title']}>
             Selected cards: <span>{selectedItems.length} </span>
           </p>
-          <div className="flyout__buttons">
+          <div className={styles['flyout__buttons']}>
             <BaseButton onClick={handleUnselectAll}>Unselect all</BaseButton>
 
             <a
@@ -40,7 +41,7 @@ const Flyout: FC = () => {
               download={`${selectedItems.length}_items.csv`}
             >
               <BaseButton>
-                <FloppyDiskIcon className="download__icon" />
+                <FloppyDiskIcon className={styles['download__icon']} />
               </BaseButton>
             </a>
           </div>

@@ -46,7 +46,6 @@
 }
 
 .card__sprite {
-  width: 96px;
   scale: 1;
   transition: scale 0.3s ease;
 }
@@ -62,8 +61,7 @@
 
 .card__label {
   margin: 8px 8px 0 0;
-  width: 25px;
-  height: 20px;
+
   align-self: flex-end;
   display: flex;
   cursor: pointer;
@@ -76,6 +74,7 @@
 }
 
 .card__label svg {
+  width: 18px;
   transition: 0.3s ease;
 }
 

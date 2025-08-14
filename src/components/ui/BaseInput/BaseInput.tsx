@@ -1,6 +1,6 @@
 ﻿import { type ChangeEvent, type FC } from 'react';
 import { BaseInputProps } from '@/types/ui';
-import styles from 'BaseInput.module.css';
+import styles from './BaseInput.module.css';
 
 const BaseInput: FC<BaseInputProps> = ({
   value,
