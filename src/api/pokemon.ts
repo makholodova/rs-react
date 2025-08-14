@@ -1,9 +1,10 @@
 ﻿import {
-  CardProps,
   NamedAPIResource,
-  PokemonDetailProps,
+  CardProps,
   RawPokemon,
-} from '@/types/components.ts';
+  PokemonDetailProps,
+} from '@/types/components.js';
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';

@@ -1,7 +1,11 @@
-﻿import { FC } from 'react';
-import Main from '@/pages/Main/Main';
+﻿import { FC, Suspense } from 'react';
+import Main from '@/components/Main/Main';
 
 const MainPage: FC = () => {
-  return <Main />;
+  return (
+    <Suspense fallback={<div>Загрузка…</div>}>
+      <Main />
+    </Suspense>
+  );
 };
 export default MainPage;

@@ -1,4 +1,4 @@
-﻿import type { CardProps } from 'types/components.ts';
+﻿import type { CardProps } from '@/types/components.ts';
 
 const formatCharactersToCSV = (cards: CardProps[]): string[] => {
   const blobParts: string[] = [];

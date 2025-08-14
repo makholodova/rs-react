@@ -1,6 +1,6 @@
 ﻿'use client';
 import React from 'react';
-import styles from '@/pages/Main/Main.module.css';
+import styles from '@/components/Main/Main.module.css';
 import { usePathname } from 'next/navigation';
 
 const MainLayout = ({

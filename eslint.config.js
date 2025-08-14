@@ -43,7 +43,7 @@ export default tseslint.config(
 
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': true }],
-      '@typescript-eslint/explicit-function-return-type': [
+      /*'@typescript-eslint/explicit-function-return-type': [
         'warn',
         {
           allowExpressions: false,
@@ -51,7 +51,7 @@ export default tseslint.config(
           allowHigherOrderFunctions: true,
           allowDirectConstAssertionInArrowFunctions: true,
         },
-      ],
+      ],*/
     },
     settings: { react: { version: 'detect' } },
   }
