@@ -1,16 +1,23 @@
-﻿import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+﻿'use client';
+
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
 const useLocalStorage = (
   key: string,
   defaultValue = ''
 ): [string, Dispatch<SetStateAction<string>>] => {
   const [value, setValue] = useState<string>(() => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultValue;
+    if (typeof window === 'undefined') return defaultValue;
+    const raw = window.localStorage.getItem(key);
+    return raw ?? defaultValue;
   });
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof window === 'undefined') return;
+    const prev = window.localStorage.getItem(key);
+    if (prev !== value) {
+      window.localStorage.setItem(key, value);
+    }
   }, [key, value]);
 
   return [value, setValue];
