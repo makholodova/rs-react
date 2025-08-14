@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import type { Metadata } from 'next';
-import Providers from '@/app/providers';
+import Providers from '@/providers';
 import Header from '@/components/Header/Header';
 import './index.css';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const LocaleLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
@@ -25,4 +25,4 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default RootLayout;
+export default LocaleLayout;

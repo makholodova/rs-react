@@ -6,6 +6,7 @@
 }
 
 .main__left {
+  display: block;
   width: 100%;
   padding-right: 1rem;
 }

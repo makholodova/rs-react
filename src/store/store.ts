@@ -1,6 +1,6 @@
 ﻿import { configureStore } from '@reduxjs/toolkit';
 import selectedItemsReducer from './selectedItemsSlice';
-import { pokemonApi } from 'api/pokemon.ts';
+import { pokemonApi } from '@/api/pokemon.ts';
 
 const store = configureStore({
   reducer: {
