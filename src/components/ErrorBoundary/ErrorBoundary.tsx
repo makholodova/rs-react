@@ -1,9 +1,9 @@
 ﻿import { Component, type ErrorInfo, type ReactNode } from 'react';
-import type {
+import {
   ErrorBoundaryProps,
   ErrorBoundaryState,
-} from 'types/components.ts';
-import Fallback from 'components/ErrorBoundary/Fallback.tsx';
+} from '../../types/components.ts';
+import Fallback from './Fallback.tsx';
 
 export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state: ErrorBoundaryState = {
