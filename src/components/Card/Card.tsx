@@ -12,8 +12,13 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectedItem, unselectedItem } from '@/store/selectedItemsSlice';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const Card: FC<CardProps> = ({ name, id }) => {
+  const searchParams = useSearchParams();
+  const queryString = searchParams?.toString();
+  const href = queryString ? `/pokemon/${id}?${queryString}` : `/pokemon/${id}`;
+
   const imageUrl = getPokemonImageUrl(id);
   const color = useMemo(() => getRandomColorRGB(), []);
 
@@ -29,7 +34,7 @@ const Card: FC<CardProps> = ({ name, id }) => {
   };
 
   return (
-    <Link href={`/pokemon/${id}`} className={styles['card']}>
+    <Link href={href} className={styles['card']}>
       <label
         onClick={(e) => {
           e.stopPropagation();
@@ -54,6 +59,7 @@ const Card: FC<CardProps> = ({ name, id }) => {
           className={styles['card__sprite']}
           src={imageUrl}
           alt={name}
+          priority={false}
         />
       </div>
       <div

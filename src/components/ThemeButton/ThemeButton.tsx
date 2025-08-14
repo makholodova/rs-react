@@ -15,7 +15,11 @@ const ThemeButton: FC = () => {
   };
 
   return (
-    <BaseButton className={styles['theme-toggle']} onClick={toggleTheme}>
+    <BaseButton
+      variant={'ghost'}
+      className={styles['theme-toggle']}
+      onClick={toggleTheme}
+    >
       {theme === 'light' ? (
         <MoonIcon
           data-testid="moon-icon"

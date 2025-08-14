@@ -6,16 +6,21 @@
   font-size: 1rem;
   font-weight: 400;
   color: var(--white);
-  background-color: var(--blue);
   border: none;
   outline: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-.header-button {
-  width: 79px;
+.variant-primary {
+  background-color: var(--blue);
+  padding: 11px 16px;
 }
-.base-button:hover {
+
+.variant-ghost {
+  background-color: transparent;
+  padding: 0;
+}
+.variant-primary:hover {
   background-color: var(--blue-hover);
 }
 
@@ -23,4 +28,7 @@
   pointer-events: none;
   opacity: 0.8;
   filter: grayscale(1);
+}
+.header-button {
+  width: 79px;
 }

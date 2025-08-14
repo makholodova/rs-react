@@ -1,33 +1,39 @@
-﻿import { type FC, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import CloseIcon from '../../assets/close.svg?react';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
-import PokemonLoader from 'components/PokemonLoader/PokemonLoader.tsx';
-import './PokemonDetail.css';
-import { capitalize } from '../../units/capitalize.ts';
-import { pokemonApi, useGetPokemonByIdQuery } from 'api/pokemon.ts';
+﻿'use client';
+
+import { type FC } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import CloseIcon from '@/assets/close.svg';
+import RefreshIcon from '@/assets/refresh.svg';
+import BaseButton from '@/components/ui/BaseButton/BaseButton';
+import PokemonLoader from '@/components/PokemonLoader/PokemonLoader';
+import styles from './PokemonDetail.module.css';
+import { capitalize } from '@/units/capitalize';
 import { useDispatch } from 'react-redux';
-import RefreshIcon from '../../assets/refresh.svg?react';
+import { pokemonApi, useGetPokemonByIdQuery } from '@/api/pokemon';
 
 const PokemonDetail: FC = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const { id } = useParams();
+  const params = useParams<{ id: string }>();
+
+  const id = params?.id;
   const numericId = Number(id);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  const handleClose = (): void => {
-    navigate({
-      pathname: '/',
-      search: location.search,
-    });
-  };
-  const handleImageLoad = (): void => {
-    setImageLoaded(true);
-  };
   const handleRefresh = (): void => {
-    dispatch(pokemonApi.util.invalidateTags([{ type: 'Pokemon', id }]));
+    dispatch(
+      pokemonApi.util.invalidateTags([{ type: 'Pokemon', id: numericId }])
+    );
+  };
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryString = searchParams?.toString();
+
+  const handleClose = () => {
+    if (window.history.length > 1) router.back();
+    else router.push(queryString ? `/?${queryString}` : '/');
   };
   const {
     data: pokemon,
@@ -39,44 +45,49 @@ const PokemonDetail: FC = () => {
   if (error || !pokemon)
     return (
       <div>
-        <BaseButton className="close-button" onClick={handleClose}>
+        <Link href={'/'} className={styles['close-button']}>
           <CloseIcon />
-        </BaseButton>
+        </Link>
         <div>Pokemon not found</div>
       </div>
     );
 
   return (
     <>
-      <div className="pokemon-detail__controls">
-        <BaseButton className="refresh__button" onClick={handleRefresh}>
-          <RefreshIcon className="refresh__icon" />
+      <div className={styles['pokemon-detail__controls']}>
+        <BaseButton
+          className={styles['refresh__button']}
+          onClick={handleRefresh}
+        >
+          <RefreshIcon className={styles['refresh__icon']} />
         </BaseButton>
-        <BaseButton className="close-button" onClick={handleClose}>
+        <BaseButton onClick={handleClose} className={styles['close-button']}>
           <CloseIcon />
         </BaseButton>
       </div>
 
-      <div className="pokemon-detail">
-        <div className="pokemon-detail__image">
-          {!imageLoaded && <CircleLoader />}
-          <img
-            className="pokemon-detail__img"
+      <div className={styles['pokemon-detail']}>
+        <div className={styles['pokemon-detail__image']}>
+          <Image
+            width={250}
+            height={250}
+            className={styles['pokemon-detail__img']}
             src={pokemon.image}
             alt={pokemon.name}
-            style={{ display: imageLoaded ? 'block' : 'none' }}
-            onLoad={handleImageLoad}
+            priority={false}
           />
         </div>
 
-        <h3 className="pokemon-detail__name">{capitalize(pokemon.name)}</h3>
+        <h3 className={styles['pokemon-detail__name']}>
+          {capitalize(pokemon.name)}
+        </h3>
 
-        <div className="pokemon-detail__info">
+        <div className={styles['pokemon-detail__info']}>
           <p>Height: {pokemon.height}</p>
           <p>Weight: {pokemon.weight}</p>
-          <div className="pokemon-detail__block">
+          <div className={styles['pokemon-detail__block']}>
             <strong>Types:</strong>
-            <div className="pokemon-detail__types">
+            <div className={styles['pokemon-detail__types']}>
               {pokemon.types?.map((type) => (
                 <span key={type} className={`type-badge type-${type}`}>
                   {type}
@@ -85,14 +96,14 @@ const PokemonDetail: FC = () => {
             </div>
           </div>
 
-          <div className="pokemon-detail__block">
+          <div className={styles['pokemon-detail__block']}>
             <strong>Abilities:</strong>
             <p>{pokemon.abilities?.join(', ')}</p>
           </div>
 
-          <div className="pokemon-detail__block">
+          <div className={styles['pokemon-detail__block']}>
             <strong>Stats:</strong>
-            <ul className="pokemon-detail__stats">
+            <ul className={styles['pokemon-detail__stats']}>
               {pokemon.stats?.map((stat) => (
                 <li key={stat.name}>
                   {capitalize(stat.name)}: {stat.base}

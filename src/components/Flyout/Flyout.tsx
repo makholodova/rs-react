@@ -7,6 +7,7 @@ import BaseButton from '@/components/ui/BaseButton/BaseButton';
 import FloppyDiskIcon from '@/assets/floppy_disk.svg';
 import formatCharactersToCSV from '@/units/formatCharactersToCSV';
 import styles from './Flyout.module.css';
+import Link from 'next/link';
 
 const Flyout: FC = () => {
   const selectedItems = useAppSelector(
@@ -35,7 +36,7 @@ const Flyout: FC = () => {
           <div className={styles['flyout__buttons']}>
             <BaseButton onClick={handleUnselectAll}>Unselect all</BaseButton>
 
-            <a
+            <Link
               data-testid="download-link"
               href={getUrl()}
               download={`${selectedItems.length}_items.csv`}
@@ -43,7 +44,7 @@ const Flyout: FC = () => {
               <BaseButton>
                 <FloppyDiskIcon className={styles['download__icon']} />
               </BaseButton>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
