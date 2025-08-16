@@ -73,8 +73,8 @@ const PokemonDetail: FC = () => {
       <div className={styles['pokemon-detail']}>
         <div className={styles['pokemon-detail__image']}>
           <Image
-            width={250}
-            height={250}
+            width={150}
+            height={150}
             className={styles['pokemon-detail__img']}
             src={pokemon.image}
             alt={pokemon.name}

@@ -21,8 +21,8 @@ const Header: FC = () => {
           />
         </Link>
         <nav className={styles['header__nav']}>
-          <LanguageSwitcher />
           <ThemeButton />
+          <LanguageSwitcher />
           <Link className={styles['header__nav-link']} href="/">
             {t('nav.main')}
           </Link>
