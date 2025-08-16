@@ -21,7 +21,8 @@ const MainLayout = ({
       >
         {children}
       </div>
-      <div className={styles['main__right']}>{details}</div>
+      {hasDetails && <div className={styles['main__right']}>{details}</div>}
+
       <Flyout />
     </main>
   );
