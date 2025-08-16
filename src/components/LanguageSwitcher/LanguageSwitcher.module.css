@@ -17,7 +17,9 @@
   width: 20px;
   height: 20px;
   text-decoration: none;
-  transition: box-shadow 0.3s ease,opacity 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .link:hover {
@@ -34,6 +36,5 @@
 
 .image {
   object-fit: cover;
-  border-radius: 50%
-
+  border-radius: 50%;
 }
