@@ -35,8 +35,7 @@ const PokemonDetail: FC = () => {
   };
 
   const handleClose = () => {
-    if (window.history.length > 1) router.back();
-    else router.push(queryString ? `/?${queryString}` : '/');
+    router.push(queryString ? `/?${queryString}` : '/');
   };
   const {
     data: pokemon,
