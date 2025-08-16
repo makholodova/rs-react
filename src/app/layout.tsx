@@ -1,7 +1,5 @@
 ﻿import React from 'react';
 import type { Metadata } from 'next';
-import Providers from '@/providers';
-import Header from '@/components/Header/Header';
 import './index.css';
 
 export const metadata: Metadata = {
@@ -12,15 +10,18 @@ export const metadata: Metadata = {
   },
 };
 
-const LocaleLayout = ({ children }: { children: React.ReactNode }) => {
+const LocaleLayout = async ({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) => {
+  const { locale } = await params;
+
   return (
-    <html lang="en">
-      <body>
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
-      </body>
+    <html lang={locale}>
+      <body>{children}</body>
     </html>
   );
 };
