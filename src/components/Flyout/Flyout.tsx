@@ -1,15 +1,15 @@
 ﻿'use client';
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { clearSelection } from '@/store/selectedItemsSlice';
 import type { RootState } from '@/store/store';
 import BaseButton from '@/components/ui/BaseButton/BaseButton';
 import FloppyDiskIcon from '@/assets/floppy_disk.svg';
-import formatCharactersToCSV from '@/units/formatCharactersToCSV';
 import styles from './Flyout.module.css';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const Flyout: FC = () => {
+  const t = useTranslations('Flyout');
   const selectedItems = useAppSelector(
     (state: RootState) => state.selectedItems.items
   );
@@ -21,30 +21,33 @@ const Flyout: FC = () => {
     dispatch(clearSelection());
   };
 
-  const getUrl = (): string => {
-    const csvData = formatCharactersToCSV(selectedItems);
-    const blob = new Blob(['\uFEFF', ...csvData], { type: 'text/csv' });
-    return URL.createObjectURL(blob);
-  };
+  const selectedItemsJson = useMemo(
+    () => JSON.stringify(selectedItems),
+    [selectedItems]
+  );
+
   if (isFlyoutVisible) {
     return (
       <div className={styles['flyout']}>
         <div className={styles['flyout__content']}>
           <p className={styles['flyout__title']}>
-            Selected cards: <span>{selectedItems.length} </span>
+            {t('title')}: <span>{selectedItems.length} </span>
           </p>
           <div className={styles['flyout__buttons']}>
-            <BaseButton onClick={handleUnselectAll}>Unselect all</BaseButton>
+            <BaseButton onClick={handleUnselectAll}>
+              {t('button.unselect')}
+            </BaseButton>
 
-            <Link
-              data-testid="download-link"
-              href={getUrl()}
-              download={`${selectedItems.length}_items.csv`}
-            >
-              <BaseButton>
+            <form action="/api/actions" method="POST" target="_blank">
+              <input type="hidden" name="items" value={selectedItemsJson} />
+              <BaseButton
+                type="submit"
+                data-testid="download-link"
+                aria-label="Download CSV"
+              >
                 <FloppyDiskIcon className={styles['download__icon']} />
               </BaseButton>
-            </Link>
+            </form>
           </div>
         </div>
       </div>

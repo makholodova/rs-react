@@ -8,7 +8,7 @@ import useLocalStorage from '@/hooks/use-local-storage';
 import CardList from '@/components/CardList/CardList';
 import BaseButton from '@/components/ui/BaseButton/BaseButton';
 import Pagination from '@/components/Pagination/Pagination';
-import Flyout from '@/components/Flyout/Flyout';
+
 import styles from './Main.module.css';
 import { CardProps } from '@/types/components';
 import {
@@ -105,7 +105,6 @@ const Main: FC = () => {
         loading={isLoading}
         isFetchError={isFetchError}
       />
-      <Flyout />
     </>
   );
 };
