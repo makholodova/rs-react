@@ -11,8 +11,10 @@ import { SearchProps } from '@/types/components';
 import BaseInput from '../ui/BaseInput/BaseInput';
 import BaseButton from '../ui/BaseButton/BaseButton';
 import styles from './Search.module.css';
+import { useTranslations } from 'next-intl';
 
 const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
+  const t = useTranslations('Search');
   const [search, setSearch] = useState(propSearch);
 
   useEffect(() => {
@@ -33,12 +35,12 @@ const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
     <form onSubmit={handleSubmit} className={styles['search-container']}>
       <BaseInput
         type="search"
-        placeholder="Enter the full name of the pokemon..."
+        placeholder={t('placeholder')}
         value={search}
         onChange={handleInput}
       />
       <BaseButton className={styles['header-button']} type="submit">
-        Search
+        {t('button')}
       </BaseButton>
     </form>
   );

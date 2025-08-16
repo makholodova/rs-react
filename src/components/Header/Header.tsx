@@ -1,10 +1,13 @@
 ﻿import { type FC } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation.ts';
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
 import styles from './Header.module.css';
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher.tsx';
 
 const Header: FC = () => {
+  const t = useTranslations('Header');
   return (
     <header className={styles['header-wrapper']}>
       <div className={styles['header']}>
@@ -18,12 +21,13 @@ const Header: FC = () => {
           />
         </Link>
         <nav className={styles['header__nav']}>
+          <LanguageSwitcher />
           <ThemeButton />
           <Link className={styles['header__nav-link']} href="/">
-            Main
+            {t('nav.main')}
           </Link>
           <Link className={styles['header__nav-link']} href="/about">
-            About
+            {t('nav.about')}
           </Link>
         </nav>
       </div>

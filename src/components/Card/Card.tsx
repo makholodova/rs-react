@@ -10,7 +10,7 @@ import { getRandomColorRGB } from '@/units/generate-colors';
 import { capitalize } from '@/units/capitalize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectedItem, unselectedItem } from '@/store/selectedItemsSlice';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation.ts';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 

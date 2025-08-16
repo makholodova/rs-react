@@ -3,6 +3,7 @@ import { CardListProps } from '@/types/components';
 import PokemonLoader from '@/components/PokemonLoader/PokemonLoader';
 import Card from '@/components/Card/Card.tsx';
 import styles from './CardList.module.css';
+import { useTranslations } from 'next-intl';
 
 const CardList: FC<CardListProps> = ({
   items,
@@ -10,6 +11,8 @@ const CardList: FC<CardListProps> = ({
   isFetchError,
   search,
 }) => {
+  const t = useTranslations('CardList');
+
   if (loading) {
     return <PokemonLoader />;
   }
@@ -17,8 +20,8 @@ const CardList: FC<CardListProps> = ({
     return (
       <>
         {' '}
-        <p className={styles['error']}>Oops! Something went wrong</p>
-        <p className={styles['error']}>Pokemon not found</p>
+        <p className={styles['error']}>{t('error.general')}</p>
+        <p className={styles['error']}>{t('error.notFound')}</p>
       </>
     );
   }
@@ -26,7 +29,7 @@ const CardList: FC<CardListProps> = ({
     return (
       <p
         className={styles['not-found-message']}
-      >{`No results found for "${search}"`}</p>
+      >{` ${t('empty')} "${search}"`}</p>
     );
   }
   return (

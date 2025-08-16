@@ -2,7 +2,7 @@
 
 import { type FC } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation.ts';
 import Image from 'next/image';
 import CloseIcon from '@/assets/close.svg';
 import RefreshIcon from '@/assets/refresh.svg';
@@ -12,24 +12,27 @@ import styles from './PokemonDetail.module.css';
 import { capitalize } from '@/units/capitalize';
 import { useDispatch } from 'react-redux';
 import { pokemonApi, useGetPokemonByIdQuery } from '@/api/pokemon';
+import { useTranslations } from 'next-intl';
 
 const PokemonDetail: FC = () => {
+  const t = useTranslations('PokemonDetail');
+
   const params = useParams<{ id: string }>();
 
   const id = params?.id;
   const numericId = Number(id);
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const queryString = searchParams?.toString();
 
   const handleRefresh = (): void => {
     dispatch(
       pokemonApi.util.invalidateTags([{ type: 'Pokemon', id: numericId }])
     );
   };
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const queryString = searchParams?.toString();
 
   const handleClose = () => {
     if (window.history.length > 1) router.back();
@@ -42,13 +45,14 @@ const PokemonDetail: FC = () => {
   } = useGetPokemonByIdQuery(numericId);
 
   if (isFetching) return <PokemonLoader />;
+
   if (error || !pokemon)
     return (
       <div>
         <Link href={'/'} className={styles['close-button']}>
           <CloseIcon />
         </Link>
-        <div>Pokemon not found</div>
+        <div>{t('notFound')}</div>
       </div>
     );
 
@@ -83,13 +87,20 @@ const PokemonDetail: FC = () => {
         </h3>
 
         <div className={styles['pokemon-detail__info']}>
-          <p>Height: {pokemon.height}</p>
-          <p>Weight: {pokemon.weight}</p>
+          <p>
+            {t('height')}: {pokemon.height}
+          </p>
+          <p>
+            {t('weight')}: {pokemon.weight}
+          </p>
           <div className={styles['pokemon-detail__block']}>
-            <strong>Types:</strong>
+            <strong>{t('types')}:</strong>
             <div className={styles['pokemon-detail__types']}>
               {pokemon.types?.map((type) => (
-                <span key={type} className={`type-badge type-${type}`}>
+                <span
+                  key={type}
+                  className={`${styles['type-badge']} ${styles[`type-${type}`]}`}
+                >
                   {type}
                 </span>
               ))}
@@ -97,12 +108,12 @@ const PokemonDetail: FC = () => {
           </div>
 
           <div className={styles['pokemon-detail__block']}>
-            <strong>Abilities:</strong>
+            <strong>{t('abilities')}:</strong>
             <p>{pokemon.abilities?.join(', ')}</p>
           </div>
 
           <div className={styles['pokemon-detail__block']}>
-            <strong>Stats:</strong>
+            <strong>{t('stats')}:</strong>
             <ul className={styles['pokemon-detail__stats']}>
               {pokemon.stats?.map((stat) => (
                 <li key={stat.name}>
