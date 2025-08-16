@@ -1,6 +1,11 @@
-﻿/** @type {import('next').NextConfig} */
+﻿import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: './dist',
+
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -16,10 +21,8 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
         port: '',
         pathname: '/PokeAPI/sprites/master/sprites/pokemon/**',
-
       },
     ],
   },
 };
-
-export default nextConfig;
+export default withNextIntl(nextConfig);

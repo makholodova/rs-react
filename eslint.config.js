@@ -29,7 +29,6 @@ export default tseslint.config(
       'react-compiler': reactCompiler,
     },
     rules: {
-
       ...reactHooks.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
@@ -37,8 +36,10 @@ export default tseslint.config(
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
 
-
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
       'react-compiler/react-compiler': 'error',
 
       '@typescript-eslint/no-explicit-any': 'error',
