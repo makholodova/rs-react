@@ -12,6 +12,11 @@
       "unselect": "Unselect all"
     }
   },
+  "NotFound": {
+    "title": "404 — Page Not Found",
+    "text": "Oops! The page you&rsquo;re looking for doesn&rsquo;t exist or has been moved.",
+    "home": "Go to Homepage"
+  },
   "Search": {
     "placeholder": "Enter the full name of the pokemon...",
     "button": "Search"
