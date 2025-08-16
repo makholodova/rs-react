@@ -1,6 +1,5 @@
 ﻿'use client';
 import { FC, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import RefreshIcon from '@/assets/refresh.svg';
 import Search from '@/components/Search/Search';
@@ -15,26 +14,22 @@ import {
   pokemonApi,
   useGetAllPokemonQuery,
   useGetPokemonByNameQuery,
-} from '@/api/pokemon';
+} from '@/api/rtk/pokemon.ts';
+import { useDispatch } from 'react-redux';
 
-const Main: FC = () => {
+type Props = {
+  currentPage: number;
+  limit: number;
+};
+const Main: FC<Props> = ({ currentPage, limit }) => {
   const [search, setSearch] = useLocalStorage('search-makholodova', '');
-  const limit = 20;
-
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const currentPage = parseInt(searchParams?.get('page') ?? '1', 10);
-  const offset = (currentPage - 1) * limit;
 
   const dispatch = useDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const {
-    data: searchData,
-    error: searchError,
-    isFetching: isSearchFetching,
-  } = useGetPokemonByNameQuery(search.toLowerCase());
+  const offset = (currentPage - 1) * limit;
 
   const {
     data: listData,
@@ -42,37 +37,36 @@ const Main: FC = () => {
     isFetching: isListFetching,
   } = useGetAllPokemonQuery({ offset, limit });
 
+  const {
+    data: searchData,
+    error: searchError,
+    isFetching: isSearchFetching,
+  } = useGetPokemonByNameQuery(search.toLowerCase(), {
+    skip: !search.trim(),
+  });
+
   const items: CardProps[] = useMemo(() => {
     if (search.trim() && searchData?.id && searchData?.name) {
       return [searchData];
     }
-    if (listData?.results) {
-      return listData.results.map((item) => {
-        const idMatch = item.url.match(/\/pokemon\/(\d+)\//);
-        const id = idMatch ? parseInt(idMatch[1], 10) : 0;
-
-        return {
-          name: item.name,
-          id,
-        };
-      });
-    }
-    return [];
+    return listData?.items ?? [];
   }, [search, searchData, listData]);
 
+  const totalCount = listData?.count ?? 0;
   const isSearching = Boolean(search.trim());
   const isNoResults =
     isSearching &&
     !isSearchFetching &&
     (!searchData || !searchData.id || !searchData.name);
 
-  const isLoading = search.trim() ? isSearchFetching : isListFetching;
+  const isLoading = isSearching ? isSearchFetching : isListFetching;
   const isFetchError = Boolean(search.trim() ? searchError : listError);
 
   const handleRefresh = (): void => {
     dispatch(
       pokemonApi.util.invalidateTags([{ type: 'PokemonList', id: 'LIST' }])
     );
+    router.refresh();
   };
 
   const handlePageChange = (newPage: number): void => {
@@ -80,7 +74,8 @@ const Main: FC = () => {
     params.set('page', String(newPage));
     router.replace(`${pathname}?${params.toString()}`);
   };
-
+  const isNextDisabled =
+    isSearching || isNoResults || currentPage * limit >= totalCount;
   return (
     <>
       <Search search={search} onSearchChange={setSearch} />
@@ -95,7 +90,7 @@ const Main: FC = () => {
           <Pagination
             currentPage={currentPage}
             onPageChange={handlePageChange}
-            isNextDisabled={isSearching || isNoResults || items.length < limit}
+            isNextDisabled={isNextDisabled}
           />
         </div>
       )}

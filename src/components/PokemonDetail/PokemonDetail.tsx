@@ -11,8 +11,9 @@ import PokemonLoader from '@/components/PokemonLoader/PokemonLoader';
 import styles from './PokemonDetail.module.css';
 import { capitalize } from '@/units/capitalize';
 import { useDispatch } from 'react-redux';
-import { pokemonApi, useGetPokemonByIdQuery } from '@/api/pokemon';
+
 import { useTranslations } from 'next-intl';
+import { pokemonApi, useGetPokemonByIdQuery } from '@/api/rtk/pokemon.ts';
 
 const PokemonDetail: FC = () => {
   const t = useTranslations('PokemonDetail');

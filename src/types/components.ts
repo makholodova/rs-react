@@ -1,5 +1,7 @@
 ﻿import type { ReactNode } from 'react';
-
+export type PageProps = {
+  searchParams: Promise<{ page?: string }>;
+};
 export type NamedAPIResource = {
   name: string;
   url: string;

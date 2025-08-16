@@ -6,6 +6,7 @@ import Header from '@/components/Header/Header';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing.ts';
 import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Pokémon',
@@ -26,10 +27,11 @@ const LocaleLayout = async ({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const messages = await getMessages();
 
   return (
     <Providers>
-      <NextIntlClientProvider>
+      <NextIntlClientProvider locale={locale} messages={messages}>
         <Header />
         {children}
       </NextIntlClientProvider>

@@ -1,11 +1,11 @@
 ﻿import {
-  NamedAPIResource,
   CardProps,
   RawPokemon,
   PokemonDetailProps,
 } from '@/types/components.js';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { NamedAPIResource } from '@/types/components.js';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
@@ -16,11 +16,21 @@ export const pokemonApi = createApi({
   tagTypes: ['Pokemon', 'PokemonList'],
   endpoints: (build) => ({
     getAllPokemon: build.query<
-      { results: NamedAPIResource[] },
+      { items: CardProps[]; count: number },
       { offset: number; limit: number }
     >({
       query: ({ offset = 0, limit = 20 }) =>
         `/pokemon?offset=${offset}&limit=${limit}`,
+      transformResponse: (raw: {
+        count: number;
+        results: NamedAPIResource[];
+      }): { items: CardProps[]; count: number } => ({
+        count: raw?.count ?? 0,
+        items: (raw?.results ?? []).map(({ name, url }) => {
+          const id = Number(url.match(/\/pokemon\/(\d+)\//)?.[1] ?? 0);
+          return { id, name };
+        }),
+      }),
       providesTags: () => [{ type: 'PokemonList', id: 'LIST' } as const],
     }),
 
@@ -53,7 +63,7 @@ export const pokemonApi = createApi({
   }),
 });
 export const {
-  useGetAllPokemonQuery,
   useGetPokemonByNameQuery,
   useGetPokemonByIdQuery,
+  useGetAllPokemonQuery,
 } = pokemonApi;
