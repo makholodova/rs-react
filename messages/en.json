@@ -1,0 +1,44 @@
+﻿{
+  "Header": {
+    "logoAlt": "Logo",
+    "nav": {
+      "main": "Main",
+      "about": "About"
+    }
+  },
+  "Flyout": {
+    "title": "Selected cards",
+    "button": {
+      "unselect": "Unselect all"
+    }
+  },
+  "NotFound": {
+    "title": "404 — Page Not Found",
+    "text": "Oops! The page you're looking for doesn't exist or has been moved.",
+    "home": "Go to Homepage"
+  },
+  "Search": {
+    "placeholder": "Enter the full name of the pokemon...",
+    "button": "Search"
+  },
+  "About": {
+    "name": "Marina Kholodova",
+    "role": "Frontend Developer",
+    "bio": "I'm Marina, a frontend developer. I'm inspired by mountains and snowboarding — it's my way to recharge. I got into development out of curiosity about web technologies, which grew into a passion for creating modern and user-friendly interfaces. I enjoy building interfaces that are intuitive and pleasant to use. In the future, I want to grow as a frontend specialist and contribute to creating meaningful and useful products."
+  },
+  "CardList": {
+    "error": {
+      "general": "Oops! Something went wrong",
+      "notFound": "Pokémon not found"
+    },
+    "empty": "No results found for "
+  },
+  "PokemonDetail": {
+    "notFound": "Pokémon not found",
+    "height": "Height",
+    "weight": "Weight",
+    "types": "Types",
+    "abilities": "Abilities",
+    "stats": "Stats"
+  }
+}

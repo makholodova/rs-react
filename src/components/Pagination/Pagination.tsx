@@ -1,6 +1,7 @@
 ﻿import type { FC } from 'react';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import './Pagination.css';
+
+import styles from './Pagination.module.css';
+import BaseButton from '@/components/ui/BaseButton/BaseButton.tsx';
 
 export interface PaginationProps {
   currentPage: number;
@@ -14,17 +15,17 @@ const Pagination: FC<PaginationProps> = ({
   isNextDisabled,
 }) => {
   return (
-    <div className="pagination-controls">
+    <div className={styles['pagination-controls']}>
       <BaseButton
-        className="button button-prev"
+        className={styles['button button-prev']}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
         &lt;
       </BaseButton>
-      <span className="pagination-label">{currentPage}</span>
+      <span className={styles['pagination-label']}>{currentPage}</span>
       <BaseButton
-        className="button button-next"
+        className={styles['button button-next']}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={isNextDisabled}
       >

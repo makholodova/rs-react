@@ -1,0 +1,27 @@
+﻿.container-not-found {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.not-found-text {
+  text-align: center;
+}
+
+.not-found-link {
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+  background-color: var(--blue);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.not-found-link:hover {
+  background-color: var(--blue-hover);
+}

@@ -1,16 +1,20 @@
-﻿import {
+﻿'use client';
+
+import {
   type ChangeEvent,
   type FC,
   type FormEvent,
   useEffect,
   useState,
 } from 'react';
-import type { SearchProps } from 'types/components.ts';
-import BaseInput from 'components/ui/BaseInput/BaseInput.tsx';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import './Search.css';
+import { SearchProps } from '@/types/components';
+import BaseInput from '../ui/BaseInput/BaseInput';
+import BaseButton from '../ui/BaseButton/BaseButton';
+import styles from './Search.module.css';
+import { useTranslations } from 'next-intl';
 
 const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
+  const t = useTranslations('Search');
   const [search, setSearch] = useState(propSearch);
 
   useEffect(() => {
@@ -28,15 +32,15 @@ const Search: FC<SearchProps> = ({ search: propSearch, onSearchChange }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="search-container">
+    <form onSubmit={handleSubmit} className={styles['search-container']}>
       <BaseInput
         type="search"
-        placeholder="Enter the full name of the pokemon..."
+        placeholder={t('placeholder')}
         value={search}
         onChange={handleInput}
       />
-      <BaseButton className="header-button" type="submit">
-        Search
+      <BaseButton className={styles['header-button']} type="submit">
+        {t('button')}
       </BaseButton>
     </form>
   );

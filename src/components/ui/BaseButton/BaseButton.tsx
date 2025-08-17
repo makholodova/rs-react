@@ -1,15 +1,26 @@
 ﻿import { type FC } from 'react';
-import type { BaseButtonProps } from 'types/ui.ts';
-import './BaseButton.css';
+import { BaseButtonProps } from '@/types/ui';
+import styles from './BaseButton.module.css';
 
 const BaseButton: FC<BaseButtonProps> = ({
   type = 'button',
+  variant = 'primary',
   children,
   className = '',
   ...rest
 }) => {
   return (
-    <button type={type} className={`base-button ${className}`} {...rest}>
+    <button
+      type={type}
+      className={[
+        styles['base-button'],
+        styles[`variant-${variant}`],
+        className,
+      ]
+        .join(' ')
+        .trim()}
+      {...rest}
+    >
       {children}
     </button>
   );

@@ -8,6 +8,7 @@
 export interface BaseButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
+  variant?: 'primary' | 'ghost';
 }
 
 export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {

@@ -1,8 +1,10 @@
 ﻿import type { FC } from 'react';
-import './CircleLoader.css';
+import styles from './CircleLoader.module.css';
 
 const CircleLoader: FC = () => {
-  return <div className="circle-loader" data-testid="circle-loader"></div>;
+  return (
+    <div className={styles['circle-loader']} data-testid="circle-loader"></div>
+  );
 };
 
 export default CircleLoader;

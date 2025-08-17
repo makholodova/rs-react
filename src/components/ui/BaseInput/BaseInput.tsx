@@ -1,6 +1,6 @@
 ﻿import { type ChangeEvent, type FC } from 'react';
-import type { BaseInputProps } from 'types/ui.ts';
-import './BaseInput.css';
+import { BaseInputProps } from '@/types/ui';
+import styles from './BaseInput.module.css';
 
 const BaseInput: FC<BaseInputProps> = ({
   value,
@@ -20,7 +20,7 @@ const BaseInput: FC<BaseInputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={handleInput}
-      className={`base-input`}
+      className={styles['base-input']}
       {...rest}
     />
   );

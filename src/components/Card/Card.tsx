@@ -1,40 +1,31 @@
-﻿import { type FC, useMemo, useState } from 'react';
-import type { CardProps } from 'types/components.ts';
-import CircleLoader from 'components/CircleLoader/CircleLoader.tsx';
-import { getRandomColorRGB } from '../../units/generate-colors.ts';
-import { getPokemonImageUrl } from '../../units/pokemon-helpers.ts';
-import './Card.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { capitalize } from '../../units/capitalize.ts';
-import HeartIcon from '../../assets/heart.svg?react';
-import {
-  selectedItem,
-  unselectedItem,
-} from '../../store/selectedItemsSlice.ts';
-import type { RootState } from '../../store/store.ts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+﻿'use client';
+
+import { type FC, useMemo } from 'react';
+import HeartIcon from '@/assets/heart.svg';
+import styles from './Card.module.css';
+import { CardProps } from '@/types/components';
+import { RootState } from '@/store/store';
+import { getPokemonImageUrl } from '@/units/pokemon-helpers';
+import { getRandomColorRGB } from '@/units/generate-colors';
+import { capitalize } from '@/units/capitalize';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectedItem, unselectedItem } from '@/store/selectedItemsSlice';
+import { Link } from '@/i18n/navigation.ts';
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const Card: FC<CardProps> = ({ name, id }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const searchParams = useSearchParams();
+  const queryString = searchParams?.toString();
+  const href = queryString ? `/pokemon/${id}?${queryString}` : `/pokemon/${id}`;
 
   const imageUrl = getPokemonImageUrl(id);
   const color = useMemo(() => getRandomColorRGB(), []);
-
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const dispatch = useAppDispatch();
   const isSelected = useAppSelector((state: RootState) =>
     state.selectedItems.items.some((item: CardProps) => item.id === id)
   );
-
-  const handleClick = (): void => {
-    navigate(`/pokemon/${id}${location.search}`);
-  };
-
-  const handleImageLoad = (): void => {
-    setImageLoaded(true);
-  };
 
   const handleCheckboxChange = (): void => {
     if (isSelected) {
@@ -43,15 +34,15 @@ const Card: FC<CardProps> = ({ name, id }) => {
   };
 
   return (
-    <div onClick={handleClick} className="card">
+    <Link href={href} className={styles['card']}>
       <label
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="card__label"
+        className={styles['card__label']}
       >
         <input
-          className="card__checkbox"
+          className={styles['card__checkbox']}
           type="checkbox"
           checked={isSelected}
           onClick={(e) => {
@@ -61,20 +52,23 @@ const Card: FC<CardProps> = ({ name, id }) => {
         ></input>
         <HeartIcon />
       </label>
-      <div className="card__image">
-        {!imageLoaded && <CircleLoader />}
-        <img
-          className="card__sprite"
+      <div className={styles['card__image']}>
+        <Image
+          width={96}
+          height={96}
+          className={styles['card__sprite']}
           src={imageUrl}
           alt={name}
-          style={{ display: imageLoaded ? 'block' : 'none' }}
-          onLoad={handleImageLoad}
+          priority={false}
         />
       </div>
-      <div className="card__title-wrapper" style={{ backgroundColor: color }}>
-        <h3 className="card__title">{capitalize(name)}</h3>
+      <div
+        className={styles['card__title-wrapper']}
+        style={{ backgroundColor: color }}
+      >
+        <h3 className={styles['card__title']}>{capitalize(name)}</h3>
       </div>
-    </div>
+    </Link>
   );
 };
 

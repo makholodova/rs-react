@@ -1,13 +1,15 @@
-﻿import { type FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { clearSelection } from '../../store/selectedItemsSlice.ts';
-import type { RootState } from '../../store/store.ts';
-import BaseButton from 'components/ui/BaseButton/BaseButton.tsx';
-import FloppyDiskIcon from '../../assets/floppy_disk.svg?react';
-import formatCharactersToCSV from '../../units/formatCharactersToCSV.ts';
-import './Flyout.css';
+﻿'use client';
+import { type FC, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { clearSelection } from '@/store/selectedItemsSlice';
+import type { RootState } from '@/store/store';
+import BaseButton from '@/components/ui/BaseButton/BaseButton';
+import FloppyDiskIcon from '@/assets/floppy_disk.svg';
+import styles from './Flyout.module.css';
+import { useTranslations } from 'next-intl';
 
 const Flyout: FC = () => {
+  const t = useTranslations('Flyout');
   const selectedItems = useAppSelector(
     (state: RootState) => state.selectedItems.items
   );
@@ -19,30 +21,33 @@ const Flyout: FC = () => {
     dispatch(clearSelection());
   };
 
-  const getUrl = (): string => {
-    const csvData = formatCharactersToCSV(selectedItems);
-    const blob = new Blob(['\uFEFF', ...csvData], { type: 'text/csv' });
-    return URL.createObjectURL(blob);
-  };
+  const selectedItemsJson = useMemo(
+    () => JSON.stringify(selectedItems),
+    [selectedItems]
+  );
+
   if (isFlyoutVisible) {
     return (
-      <div className="flyout">
-        <div className="flyout__content">
-          <p className="flyout__title">
-            Selected cards: <span>{selectedItems.length} </span>
+      <div className={styles['flyout']}>
+        <div className={styles['flyout__content']}>
+          <p className={styles['flyout__title']}>
+            {t('title')}: <span>{selectedItems.length} </span>
           </p>
-          <div className="flyout__buttons">
-            <BaseButton onClick={handleUnselectAll}>Unselect all</BaseButton>
+          <div className={styles['flyout__buttons']}>
+            <BaseButton onClick={handleUnselectAll}>
+              {t('button.unselect')}
+            </BaseButton>
 
-            <a
-              data-testid="download-link"
-              href={getUrl()}
-              download={`${selectedItems.length}_items.csv`}
-            >
-              <BaseButton>
-                <FloppyDiskIcon className="download__icon" />
+            <form action="/api/actions" method="POST" target="_blank">
+              <input type="hidden" name="items" value={selectedItemsJson} />
+              <BaseButton
+                type="submit"
+                data-testid="download-link"
+                aria-label="Download CSV"
+              >
+                <FloppyDiskIcon className={styles['download__icon']} />
               </BaseButton>
-            </a>
+            </form>
           </div>
         </div>
       </div>

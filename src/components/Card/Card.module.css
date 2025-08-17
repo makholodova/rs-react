@@ -1,0 +1,87 @@
+﻿.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--grey-lighter);
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
+  width: 140px;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.card__title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 45% 45% 0 0;
+}
+
+.card__title {
+  font-size: 1rem;
+  padding: 8px;
+  text-align: center;
+  overflow-wrap: break-word;
+  color: var(--white);
+}
+
+.card__image {
+  position: relative;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.card__sprite {
+  scale: 1;
+  transition: scale 0.3s ease;
+}
+
+.card:hover .card__sprite {
+  scale: 1.2;
+}
+
+.card__description {
+  text-align: center;
+  color: var(--grey-lighter);
+}
+
+.card__label {
+  margin: 8px 8px 0 0;
+
+  align-self: flex-end;
+  display: flex;
+  cursor: pointer;
+  color: transparent;
+}
+
+.card__checkbox {
+  display: none;
+  appearance: none;
+}
+
+.card__label svg {
+  width: 18px;
+  transition: 0.3s ease;
+}
+
+.card__label svg:hover {
+  transform: scale(1.3);
+}
+
+.card__label:has(input:checked) {
+  color: var(--red-heart);
+}
